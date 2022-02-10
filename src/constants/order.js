@@ -1,0 +1,16 @@
+const CONFIRM_FROM = {
+  SYSTEM: 'SYSTEM',
+  SLACK: 'SLACK',
+};
+
+const CURRENCY = {
+  VND: 'VNĐ',
+};
+
+const ORDER_STATUS = {
+  PAID: 'PAID',
+  PENDING: 'PENDING',
+  CANCEL: 'CANCEL',
+};
+
+export { CONFIRM_FROM, CURRENCY, ORDER_STATUS };
