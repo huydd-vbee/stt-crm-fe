@@ -19,7 +19,7 @@ export const sidebarMenu = [
     route: ROUTES.CUSTOMER,
   },
   {
-    key: 'ttsManagement',
+    key: 'sttManagement',
     icon: <Description />,
     subMenu: [
       {

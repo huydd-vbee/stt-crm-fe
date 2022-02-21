@@ -41,11 +41,11 @@ const CustomerList = () => {
 
   const columns = [
     {
-      field: 'id',
-      title: 'ID',
+      field: 'account',
+      title: t('account'),
       sortable: false,
       align: 'left',
-      render: (row) => row.id.split('-')[0],
+      render: (row) => row,
     },
     {
       field: 'name',
@@ -67,25 +67,25 @@ const CustomerList = () => {
       align: 'left',
     },
     {
+      field: 'paidDuration',
+      title: t('paidDuration'),
+      sortable: false,
+      align: 'left',
+      render: (row) => delimitNumber(row.paidDuration),
+    },
+    {
+      field: 'freeDuration',
+      title: t('freeDuration'),
+      sortable: false,
+      align: 'left',
+      render: (row) => delimitNumber(row.freeDuration),
+    },
+    {
       field: 'packageCode',
       title: t('package'),
       sortable: false,
       align: 'left',
       render: (row) => renderPackageCode(row.packageCode),
-    },
-    {
-      field: 'remainingCharacters',
-      title: t('remainingCharactersTitle'),
-      sortable: false,
-      align: 'left',
-      render: (row) => delimitNumber(row.remainingCharacters),
-    },
-    {
-      field: 'bonusCharacters',
-      title: t('bonusCharactersTitle'),
-      sortable: false,
-      align: 'left',
-      render: (row) => delimitNumber(row.bonusCharacters),
     },
     {
       field: 'packageExpiryDate',
@@ -109,6 +109,7 @@ const CustomerList = () => {
       total={paging.total}
       page={paging.page}
       loading={loading}
+      showNumber
       onChangePage={handleChangePage}
     />
   );

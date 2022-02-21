@@ -5,6 +5,7 @@ import ROUTES from '@src/constants/routes';
 import Customers from '@src/pages/Customer';
 import DetailOrder from '@src/pages/DetailOrder';
 import Order from '@src/pages/Order';
+import Package from '@src/pages/Package';
 
 export default [
   {
@@ -65,7 +66,7 @@ export default [
   },
   {
     path: ROUTES.PACKAGE_MANAGEMENT,
-    component: ComingSoon,
+    component: Package,
     exact: true,
     restricted: false,
     isPrivate: true,

@@ -1,6 +1,6 @@
 {
   "customer": "Customer",
-  "ttsManagement": "Text To Speech",
+  "sttManagement": "Speech To Text",
   "voiceManagement": "Voice Management",
   "dictionaryManagement": "Dictionary Management",
   "blacklistManagement": "Blacklist Management",
@@ -93,5 +93,17 @@
   "unauthorizedDescription": "To access this page, you need Moderator or higher permission",
   "goHome": "Go home",
   "comingSoonTitle": "We will be up and running soon 🚀",
-  "back": "Back"
+  "back": "Back",
+  "totalRequest": "Total request",
+  "totalSuccessRequest": "Success request",
+  "totalFailedRequest": "Failed request",
+  "totalRunningRequest": "Running request",
+  "paidDuration": "Paid duration",
+  "freeDuration": "Free duration",
+  "No": "No",
+  "createPackage": "Create Package",
+  "serviceType": "Service type",
+  "usedTime": "Used Time",
+  "keyService": "Key service",
+  "usableTime": "Usable time"
 }

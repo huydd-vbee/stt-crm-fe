@@ -1,14 +1,34 @@
 import { MenuItem } from '@mui/material';
 import { COLOR, TRANSPARENT_COLOR } from '@src/styles/color';
-import { styled } from '@mui/material/styles';
+import styled from 'styled-components';
 
-export const StyledCustomers = styled('div')``;
+export const StyleButtonsAction = styled('div')`
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-bottom: 12px;
+`;
 
-export const StyledStatsCardList = styled('div')`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 23.5%);
-  grid-gap: 20px;
-  margin: 25px 0px;
+export const StyledCreateOrder = styled('div')`
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+
+  .input-control {
+    margin-bottom: 15px;
+
+    .input-label {
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: ${COLOR.dark};
+    }
+  }
+
+  .action-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
 `;
 
 export const StyledMenuItem = styled(MenuItem)`
@@ -30,11 +50,4 @@ export const StyledMenuItem = styled(MenuItem)`
       }
     }
   }
-`;
-
-export const StyleButtonsAction = styled('div')`
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  margin-bottom: 12px;
 `;
