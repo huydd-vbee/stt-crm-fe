@@ -16,9 +16,9 @@ $ npm install
 - Once the command finishes, run this command to se environment variables:
 
 ```bash
-$ cp env .env
+$ cp ..env ...env
 
-# open .env and modify the environment variables (if needed)
+# open ...env and modify the environment variables (if needed)
 ```
 
 ### Running

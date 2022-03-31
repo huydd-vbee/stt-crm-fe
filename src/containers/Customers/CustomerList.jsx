@@ -6,12 +6,14 @@ import { delimitNumber } from '@src/utils/number';
 import { PACKAGE_DURATION, PACKAGE_LEVEL } from '@src/constants/package';
 import { PAGINATION_LIMIT } from '@src/constants';
 import apis from '@src/apis';
+import {fakeUsers} from '@src/containers/Customers/fakeData';
 
-const CustomerList = () => {
+const CustomerList = (props) => {
   const { t } = useTranslation();
 
   const [paging, setPaging] = useState({ page: 1, total: 0 });
   const [users, setUsers] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   const renderPackageCode = (packageCode) => {
@@ -27,80 +29,121 @@ const CustomerList = () => {
 
   const fetchUsers = async () => {
     setLoading(true);
-    const data = await apis.users.getUsers({
+    const data = await apis.statistics.getAppRequestStats({
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,
-      sort: 'createdAt_desc',
-    });
+      startDate: props.startDate,
+      endDate: props.endDate,
+      });
+    console.log(data)
     setLoading(false);
-    if (data?.status) {
-      setUsers(data.result.users);
+    if (data.status) {
+      setUsers(data.result.apps);
       setPaging({ ...paging, total: data.result.total });
     }
+    console.log(users);
   };
 
   const columns = [
+    // {
+    //   field: 'account',
+    //   title: t('account'),
+    //   sortable: false,
+    //   align: 'left',
+    //   render: (row) => row,
+    // },
     {
-      field: 'account',
-      title: t('account'),
+      field: 'partner',
+      title: t('partner'),
       sortable: false,
       align: 'left',
-      render: (row) => row,
+      render: (row) => `${row.sender.senderName || ''}`,
     },
     {
-      field: 'name',
-      title: t('fullName'),
+      field: 'partnerApp',
+      title: t('appId'),
       sortable: false,
       align: 'left',
-      render: (row) => `${row.lastName || ''} ${row.firstName || ''}`,
+      render: (row) => `${row.sender.senderAppId || ''}`,
     },
     {
-      field: 'phoneNumber',
-      title: t('phoneNumber'),
+      field: 'succeededRequests',
+      title: t('succeeded'),
       sortable: false,
       align: 'left',
+      render: (row) => {
+        let found = Array.from(row.requestCounts).find(ele => ele.status === 'Succeeded') || {count: 0};
+        return found.count;
+      },
     },
     {
-      field: 'email',
-      title: 'Email',
+      field: 'failedRequest',
+      title: t('failed'),
       sortable: false,
       align: 'left',
+      render: (row) => {
+        let found = Array.from(row.requestCounts).find(ele => ele.status === 'Failed') || {count: 0};
+        return found.count;
+      },
     },
     {
-      field: 'paidDuration',
-      title: t('paidDuration'),
+      field: 'processingRequest',
+      title: t('processing'),
       sortable: false,
       align: 'left',
-      render: (row) => delimitNumber(row.paidDuration),
+      render: (row) => {
+        let found = Array.from(row.requestCounts).find(ele => !ele.status) || {count: 0};
+        return found.count;
+      },
     },
-    {
-      field: 'freeDuration',
-      title: t('freeDuration'),
-      sortable: false,
-      align: 'left',
-      render: (row) => delimitNumber(row.freeDuration),
-    },
-    {
-      field: 'packageCode',
-      title: t('package'),
-      sortable: false,
-      align: 'left',
-      render: (row) => renderPackageCode(row.packageCode),
-    },
-    {
-      field: 'packageExpiryDate',
-      title: t('expiryDate'),
-      sortable: false,
-      align: 'left',
-      render: (row) => moment(row.packageExpiryDate).format('DD-MM-YYYY'),
-    },
+
+    // {
+    //   field: 'phoneNumber',
+    //   title: t('phoneNumber'),
+    //   sortable: false,
+    //   align: 'left',
+    // },
+    // {
+    //   field: 'email',
+    //   title: 'Email',
+    //   sortable: false,
+    //   align: 'left',
+    // },
+    // {
+    //   field: 'paidDuration',
+    //   title: t('paidDuration'),
+    //   sortable: false,
+    //   align: 'left',
+    //   render: (row) => delimitNumber(row.paidDuration),
+    // },
+    // {
+    //   field: 'freeDuration',
+    //   title: t('freeDuration'),
+    //   sortable: false,
+    //   align: 'left',
+    //   render: (row) => delimitNumber(row.freeDuration),
+    // },
+    // {
+    //   field: 'packageCode',
+    //   title: t('package'),
+    //   sortable: false,
+    //   align: 'left',
+    //   render: (row) => renderPackageCode(row.packageCode),
+    // },
+    // {
+    //   field: 'packageExpiryDate',
+    //   title: t('expiryDate'),
+    //   sortable: false,
+    //   align: 'left',
+    //   render: (row) => moment(row.packageExpiryDate).format('DD-MM-YYYY'),
+    // },
   ];
 
   const handleChangePage = (page) => setPaging({ ...paging, page });
 
   useEffect(() => {
     fetchUsers();
-  }, [paging.page]);
+  }, [paging.page, props.startDate, props.endDate]);
 
   return (
     <Table

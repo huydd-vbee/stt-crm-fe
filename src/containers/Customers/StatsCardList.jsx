@@ -11,76 +11,60 @@ import shoppingIcon from '@src/assets/icons/shopping-circle.png';
 import freeIcon from '@src/assets/icons/no-shopping-circle.png';
 import totalRevenueIcon from '@src/assets/icons/icon-total-revenue.png';
 
-// import apis from '@src/apis';
+import apis from '@src/apis';
+import {fakeStats} from '@src/containers/Customers/fakeData';
 import { StyledStatsCardList } from './index.style';
 
-const StatsCardList = () => {
+const StatsCardList = (props) => {
   const { t } = useTranslation();
   const [loadingStats, setLoadingStats] = useState(false);
+  const [stats, setStats] = useState(fakeStats);
 
   const fetchStatistics = async () => {
-    // // setLoadingStats(true);
-    // const data = await apis.statistics.numberUsers(
-    //   STATS_USERS_BY.IDENTITY_PROVIDER,
-    //   startDate,
-    //   endDate,
-    // );
+    setLoadingStats(true);
+    const data = await apis.statistics.getOverviewRequestStats(
+      props.startDate,
+      props.endDate,
+    );
+    console.log(data);
     setLoadingStats(false);
-    // if (data.status) setNumberUsersByProvider(data.result);
+    if (data.status) setStatCardList(data.result);
   };
 
-  const statsCardList = [
-    {
-      title: 'totalCustomerTitle',
-      number: 1000,
-      icon: customerIcon,
-    },
-    {
-      title: 'totalRequest',
-      number: 1000,
-      icon: requestIcon,
-    },
-    {
-      title: 'totalSuccessRequest',
-      number: 0,
-      icon: successIcon,
-    },
-    {
-      title: 'totalFailedRequest',
-      number: 0,
-      icon: failedIcon,
-    },
-    {
-      title: 'totalRunningRequest',
-      number: 0,
-      icon: configIcon,
-    },
-    {
-      title: 'paidDuration',
-      number: 0,
-      icon: shoppingIcon,
-    },
-    {
-      title: 'freeDuration',
-      number: 0,
-      icon: freeIcon,
-    },
-    {
-      title: 'totalRevenue',
-      number: 0,
-      icon: totalRevenueIcon,
-    },
-  ];
+  const setStatCardList = (result => {
+    setStats([
+      {
+        title: 'totalRequest',
+        number: result.total || 0,
+        icon: requestIcon,
+      },
+      {
+        title: 'totalSuccessRequest',
+        number: result.succeeded || 0,
+        icon: successIcon,
+      },
+      {
+        title: 'totalFailedRequest',
+        number: result.failed || 0,
+        icon: failedIcon,
+      },
+      {
+        title: 'totalRunningRequest',
+        number: result.processing || 0,
+        icon: configIcon,
+      },
+    ])
+  });
 
   useEffect(() => {
     fetchStatistics();
-  }, []);
+  }, [props.startDate, props.endDate]);
 
   return (
     <div>
       <ProcessHandler loading={loadingStats} size={30} align="center">
         <StyledStatsCardList>
-          {statsCardList.map((item) => (
+          {stats.map((item) => (
             <StatsCard
               key={item.title}
               title={t(item.title)}

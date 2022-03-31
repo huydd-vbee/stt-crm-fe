@@ -1,13 +1,26 @@
 import { RESOURCE } from '@src/constants';
 import API from './api';
 
-const numberUsers = async (by, startDate, endDate) => {
+const getOverviewRequestStats = async (startDate, endDate) => {
   const response = await API({
     method: 'GET',
-    url: `${RESOURCE.STATISTICS}/users`,
-    params: { by, startDate, endDate },
+    url: `${RESOURCE.STATISTICS}/requests/overview`,
+    params: { startDate, endDate },
   });
   return response;
 };
 
-export { numberUsers };
+const getAppRequestStats = async ({limit, offset, startDate, endDate}) => {
+  try {
+    const response = await API({
+      method: 'GET',
+      url: `${RESOURCE.STATISTICS}/requests/app_id`,
+      params: {limit, offset, startDate, endDate },
+    });
+    return response;
+  } catch (error) {
+    return error.response?.data;
+  }
+};
+
+export { getOverviewRequestStats, getAppRequestStats };

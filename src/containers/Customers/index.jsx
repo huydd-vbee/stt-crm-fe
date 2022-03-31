@@ -15,8 +15,10 @@ import CustomerList from './CustomerList';
 
 const Customers = () => {
   const { t } = useTranslation();
+  const [startDate, setStartDate] = useState(new Date('2022-01-01'));
+  const [endDate, setEndDate] = useState(new Date());
 
-  const tabs = [{ label: t('customerList'), panel: <CustomerList /> }];
+  const tabs = [{ label: t('customerList'), panel: <CustomerList startDate={startDate} endDate={endDate}/> }];
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [packages, setPackages] = useState([]);
   const renderPackageCode = (packageCode) => {
@@ -28,7 +30,10 @@ const Customers = () => {
     const durationKey = PACKAGE_DURATION[duration];
     return `${t(levelKey)} - ${t(durationKey)}`;
   };
-  const exportOrders = async () => {};
+
+  const exportOrders = async () => {
+    // TODO: download Excel file here
+  };
 
   const renderOrderAction = (
     <StyleButtonsAction>
@@ -37,6 +42,7 @@ const Customers = () => {
         startIcon={<img src={iconExcel} alt="icon" />}
         color="secondary"
         onClick={exportOrders}
+
       >
         {t('exportExcel')}
       </Button>
@@ -47,11 +53,19 @@ const Customers = () => {
     setSelectedCustomer(customer);
     setPackages([]);
   };
+  const handleChangeEndDate = (e) => {
+    console.log(e.target.value)
+    setEndDate(e.target.value);
+  }
 
+  const handleChangeStartDate = (e) => {
+    console.log(e.target.value)
+    setStartDate(e.target.value);
+  }
   return (
     <StyledCustomers>
       <Grid container spacing={2}>
-        <Grid item xs={3} sm={3}>
+        <Grid item xs={6} sm={6}>
           <CustomerSearch
             customer={selectedCustomer}
             onChange={handleChangeCustomer}
@@ -59,50 +73,28 @@ const Customers = () => {
         </Grid>
         <Grid item xs={3} sm={3}>
           <TextField
-            name="package"
-            // value=""
-            placeholder={t('packagePlaceholder')}
-            size="small"
-            fullWidth
-            select
-          >
-            {packages &&
-              packages.map((item) => (
-                <StyledMenuItem key={item.id} value={item.id}>
-                  {renderPackageCode(item.code)}
-                </StyledMenuItem>
-              ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={3} sm={3}>
-          <TextField
-            name="package"
-            value=""
-            placeholder={t('packagePlaceholder')}
-            size="small"
-            fullWidth
-            select
-          >
-            {packages &&
-              packages.map((item) => (
-                <StyledMenuItem key={item.id} value={item.id}>
-                  {renderPackageCode(item.code)}
-                </StyledMenuItem>
-              ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={3} sm={3}>
-          <TextField
-            name="expiryDate"
+            name="startDate"
             type="date"
-            value=""
+            //value={startDate}
             placeholder="dd/mm/yy"
+            onChange={handleChangeStartDate}
             size="small"
             fullWidth
           />
         </Grid>
+        <Grid item xs={3} sm={3}>
+          <TextField
+            name="endDate"
+            //value={endDate}
+            type="date"
+            placeholder="dd/mm/yy"
+            size="small"
+            onChange={handleChangeEndDate}
+            fullWidth
+          />
+        </Grid>
       </Grid>
-      <StatsCardList />
+      <StatsCardList startDate={startDate} endDate={endDate}/>
       <SuperTabs tabs={tabs} actionComponents={renderOrderAction} />
     </StyledCustomers>
   );
