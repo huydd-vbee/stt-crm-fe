@@ -160,7 +160,7 @@ const Profile = () => {
 
 const Navbar = ({ openSidebar, handleOpenSidebar }) => (
   <StyledAppBar>
-    {/*// openSidebar={openSidebar}*/}
+    {/* openSidebar={openSidebar} */}
     <Toolbar className="container">
       {!openSidebar && (
         <IconButton color="secondary" onClick={handleOpenSidebar}>

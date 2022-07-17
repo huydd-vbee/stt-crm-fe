@@ -8,13 +8,16 @@ import moment from 'moment';
 import {LANGUAGE, PAGINATION_LIMIT} from '@src/constants';
 import {useSnackbar} from "notistack";
 
-const BotCallSessionTable = ({startDate, endDate, appId}) => {
+const BotCallSessionList = ({startDate, endDate, appId}) => {
   const { t, i18n } = useTranslation();
+  // eslint-disable-next-line no-unused-vars
   const history = useHistory();
+  // eslint-disable-next-line no-unused-vars
   const langVi = i18n.language === LANGUAGE.VI;
   const { enqueueSnackbar } = useSnackbar();
 
   const [sessions, setSessions] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [paging, setPaging] = useState({ page: 1, total: 0 });
   const handleChangePage = (newPage) => setPaging({ ...paging, page: newPage });
@@ -25,8 +28,8 @@ const BotCallSessionTable = ({startDate, endDate, appId}) => {
       appId,
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,
-      startDate: startDate,
-      endDate: endDate,
+      startDate,
+      endDate,
 
     });
     if (data.status) {
@@ -75,8 +78,8 @@ const BotCallSessionTable = ({startDate, endDate, appId}) => {
   ];
 
   useEffect(() => {
-    fetchSession()
-      .catch((err) => console.error(err));
+    // eslint-disable-next-line no-console
+    fetchSession().catch((err) => console.error(err));
   }, [paging.page, startDate, endDate]);
 
 
@@ -92,4 +95,4 @@ return (
   );
 };
 
-export default BotCallSessionTable;
+export default BotCallSessionList;

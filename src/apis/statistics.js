@@ -1,9 +1,8 @@
 import { RESOURCE } from '@src/constants';
-import API from './api';
-import api from '@src/apis/api';
 import { getCookie } from '@src/utils/cookie';
 import axios from 'axios';
 import { API_URL } from '@src/configs';
+import API from './api';
 
 const getRequestStats = async ({startDate, endDate, appId}) => {
   const response = await API({

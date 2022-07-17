@@ -3,7 +3,7 @@ import ComingSoon from '@src/pages/ComingSoon';
 
 import ROUTES from '@src/constants/routes';
 import AsrRequests from '@src/pages/AsrRequests';
-import DetailCustomer from '@src/pages/DetailCustomer';
+import CallBotDetail from '@src/pages/CallBotDetail';
 import Order from '@src/pages/Order';
 import DetailOrder from '@src/pages/DetailOrder';
 import Package from '@src/pages/Package';
@@ -24,15 +24,8 @@ export default [
     isPrivate: true,
   },
   {
-    path: ROUTES.CUSTOMER,
-    component: AsrRequests,
-    exact: true,
-    restricted: false,
-    isPrivate: true,
-  },
-  {
-    path: ROUTES.CUSTOMER_DETAIL,
-    component: DetailCustomer,
+    path: ROUTES.ASR_REQUEST_BY_BOT_DETAIL,
+    component: CallBotDetail,
     exact: true,
     restricted: false,
     isPrivate: true,

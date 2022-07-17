@@ -2,36 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import StatsCard from '@src/components/StatsCard';
 import ProcessHandler from '@src/components/ProcessHandler';
-import customerIcon from '@src/assets/icons/customer-circle.png';
 import requestIcon from '@src/assets/icons/detail-invoice.png';
 import successIcon from '@src/assets/icons/success-icon.png';
 import failedIcon from '@src/assets/icons/failed-icon.png';
 import configIcon from '@src/assets/icons/config-icon.png';
 import infoIcon from '@src/assets/icons/info-icon.png';
 import warningIcon from '@src/assets/icons/warning-icon.png';
-import shoppingIcon from '@src/assets/icons/shopping-circle.png';
-import freeIcon from '@src/assets/icons/no-shopping-circle.png';
-import totalRevenueIcon from '@src/assets/icons/icon-total-revenue.png';
 
 import apis from '@src/apis';
 import { fakeStats } from '@src/containers/AsrRequests/fakeData';
 import { StyledStatsCardList } from './index.style';
 
-const StatsCardList = (props) => {
+const StatsCardList = ({ startDate, endDate }) => {
   const { t } = useTranslation();
+
   const [loadingStats, setLoadingStats] = useState(false);
   const [stats, setStats] = useState(fakeStats);
-
-  const fetchStatistics = async () => {
-    setLoadingStats(true);
-    const data = await apis.statistics.getRequestStats({
-      startDate: props.startDate,
-      endDate: props.endDate,
-    });
-    console.log(data);
-    setLoadingStats(false);
-    if (data.status) setStatCardList(data.result);
-  };
 
   const setStatCardList = (result => {
     setStats([
@@ -78,9 +64,22 @@ const StatsCardList = (props) => {
     ]);
   });
 
+  const fetchStatistics = async () => {
+    setLoadingStats(true);
+    const data = await apis.statistics.getRequestStats({
+      startDate,
+      endDate,
+    });
+    // eslint-disable-next-line no-console
+    console.log(data);
+    setLoadingStats(false);
+    if (data.status) setStatCardList(data.result);
+  };
+
   useEffect(() => {
-    fetchStatistics();
-  }, [props.startDate, props.endDate]);
+    // eslint-disable-next-line no-console
+    fetchStatistics().catch(err => console.log(err));
+  }, [startDate, endDate]);
 
   return (
     <div>

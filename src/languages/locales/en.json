@@ -121,7 +121,7 @@
   "runningRequest": "Running Requests",
   "abandonedRequests": "Abandoned Requests",
   "emptyRequests": "Empty Text Requests",
-  "botList": "Bot List",
+  "botList": "Call Bot List",
   "callSessionList": "Call Session List",
   "botName": "Bot Name",
   "avgResponseTime": "Average Response Time",

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import StatsCard from '@src/components/StatsCard';
 import ProcessHandler from '@src/components/ProcessHandler';
+
 import requestIcon from '@src/assets/icons/detail-invoice.png';
 import successIcon from '@src/assets/icons/success-icon.png';
 import failedIcon from '@src/assets/icons/failed-icon.png';
@@ -9,25 +11,13 @@ import configIcon from '@src/assets/icons/config-icon.png';
 import warningIcon from '@src/assets/icons/warning-icon.png';
 
 import apis from '@src/apis';
-import { fakeStats } from '@src/containers/AsrRequests/fakeData';
 import { StyledStatsCardList } from './index.style';
 
-const StatsCardList = (props) => {
+const StatsCardList = ({ startDate, endDate, appId}) => {
   const { t } = useTranslation();
-  const [loadingStats, setLoadingStats] = useState(false);
-  const [stats, setStats] = useState(fakeStats);
 
-  const fetchStatistics = async () => {
-    setLoadingStats(true);
-    const data = await apis.statistics.getRequestStatsByAppId({
-      startDate: props.startDate,
-      endDate: props.endDate,
-      appId: props.appId
-    });
-    console.log(data);
-    setLoadingStats(false);
-    if (data.status) setStatCardList(data.result);
-  };
+  const [loadingStats, setLoadingStats] = useState(false);
+  const [stats, setStats] = useState([]);
 
   const setStatCardList = (result => {
     setStats([
@@ -64,9 +54,23 @@ const StatsCardList = (props) => {
     ])
   });
 
+  const fetchStatistics = async () => {
+    setLoadingStats(true);
+    const data = await apis.statistics.getRequestStatsByAppId({
+      startDate,
+      endDate,
+      appId,
+    });
+    // eslint-disable-next-line no-console
+    console.log(data);
+    setLoadingStats(false);
+    if (data.status) setStatCardList(data.result);
+  };
+
   useEffect(() => {
-    fetchStatistics();
-  }, [props.startDate, props.endDate]);
+    // eslint-disable-next-line no-console
+    fetchStatistics().catch(err => console.error(err));
+  }, [startDate, endDate]);
 
   return (
     <div>

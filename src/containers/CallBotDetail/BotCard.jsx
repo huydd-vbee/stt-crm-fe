@@ -1,27 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSnackbar } from "notistack";
+import apis from "@src/apis";
 import IconHeader from '@src/assets/icons/config-icon.png';
 import CardComponent from './CardComponent';
-import apis from "@src/apis";
-import {useSnackbar} from "notistack";
 
 const BotCard = ({appId}) => {
   const { t } = useTranslation();
 
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [botConfig, setBotConfig] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
-
-  const fetchBotConfig = async () => {
-    setLoading(true);
-    const data = await apis.bot.getBotConfigDetails(appId);
-    if (data.status) {
-      setBotConfigRows(data.result);
-    } else {
-      enqueueSnackbar(t('getCustomerDetailFailed'), { variant: 'error' });
-    }
-    setLoading(false);
-  };
 
   const setBotConfigRows = (botConfigInfo) => {
     setBotConfig([
@@ -43,11 +33,20 @@ const BotCard = ({appId}) => {
     ]);
   }
 
-
+  const fetchBotConfig = async () => {
+    setLoading(true);
+    const data = await apis.bot.getBotConfigDetails(appId);
+    if (data.status) {
+      setBotConfigRows(data.result);
+    } else {
+      enqueueSnackbar(t('getCustomerDetailFailed'), { variant: 'error' });
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    fetchBotConfig()
-      .catch(err => console.error(err));
+    // eslint-disable-next-line no-console
+    fetchBotConfig().catch(err => console.error(err));
   }, [appId]);
 
   return (

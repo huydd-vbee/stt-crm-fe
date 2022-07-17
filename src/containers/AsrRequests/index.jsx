@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import SuperTabs from '@src/components/Tabs';
 import { InputAdornment, Button, TextField} from '@mui/material';
 import { Search } from '@mui/icons-material';
+import moment from "moment";
+
+import {CUSTOMER_STATS_FEATURE} from "@src/constants/customer";
+import apis from "@src/apis";
 import iconExcel from '@src/assets/icons/excel.png';
+
+import SuperTabs from '@src/components/Tabs';
 import CustomDatePickerRangeNew from '@src/components/CustomDatePickerRangeNew';
 import { StyledCustomers, StyleButtonsAction } from './index.style';
 import StatsCardList from './StatsCardList';
-import BotList from './BotList';
-import {CUSTOMER_STATS_FEATURE} from "@src/constants/customer";
-import apis from "@src/apis";
-import moment from "moment";
-
-const INITIAL_PAGING = { page: 1, total: 0 };
-
-const initialTimeRangeFilter = [
-  moment().subtract(90, 'd').toString(),
-  moment.toString()
-];
-
-const initialFilter = () => ({
-  createdAt: initialTimeRangeFilter,
-  provider: '',
-  usagePackage: '',
-});
+import CallBotList from './CallBotList';
 
 const AsrRequests = () => {
   const { t } = useTranslation();
+
+  const INITIAL_PAGING = { page: 1, total: 0 };
+
+  const initialTimeRangeFilter = [
+    moment().subtract(90, 'd').toString(),
+    moment().toString()
+  ];
+
+  const initialFilter = () => ({
+    createdAt: initialTimeRangeFilter,
+    provider: '',
+    usagePackage: '',
+  });
 
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState(initialFilter);
@@ -71,7 +73,7 @@ const AsrRequests = () => {
       id: 'botList',
       label: t('botList'),
       panel: (
-        <BotList
+        <CallBotList
           startDate={filter.createdAt[0]}
           endDate={filter.createdAt[1]}
           onChangePage={handleChangePaging}
@@ -134,22 +136,22 @@ const AsrRequests = () => {
             }}
           />
         </div>
-        {/*<div className="filter-box">*/}
-        {/*  <SelectComponent*/}
-        {/*    name="provider"*/}
-        {/*    label={t('provider')}*/}
-        {/*    data={providers}*/}
-        {/*    value={filter.provider}*/}
-        {/*    handleChangeFilter={handleChangeFilter}*/}
-        {/*  />*/}
-        {/*  <SelectComponent*/}
-        {/*    label={t('usagePackage')}*/}
-        {/*    name="usagePackage"*/}
-        {/*    data={usagePackages}*/}
-        {/*    value={filter.usagePackage}*/}
-        {/*    handleChangeFilter={handleChangeFilter}*/}
-        {/*  />*/}
-        {/*</div>*/}
+        {/* <div className="filter-box"> */}
+        {/*  <SelectComponent */}
+        {/*    name="provider" */}
+        {/*    label={t('provider')} */}
+        {/*    data={providers} */}
+        {/*    value={filter.provider} */}
+        {/*    handleChangeFilter={handleChangeFilter} */}
+        {/*  /> */}
+        {/*  <SelectComponent */}
+        {/*    label={t('usagePackage')} */}
+        {/*    name="usagePackage" */}
+        {/*    data={usagePackages} */}
+        {/*    value={filter.usagePackage} */}
+        {/*    handleChangeFilter={handleChangeFilter} */}
+        {/*  /> */}
+        {/* </div> */}
       </div>
 
       <SuperTabs

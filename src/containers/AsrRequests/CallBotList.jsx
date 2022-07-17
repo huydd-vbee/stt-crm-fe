@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import Table from '@src/components/Table';
-import { delimitNumber } from '@src/utils/number';
 import { PACKAGE_DURATION, PACKAGE_LEVEL } from '@src/constants/package';
 import { PAGINATION_LIMIT } from '@src/constants';
 import apis from '@src/apis';
-import {fakeUsers} from '@src/containers/AsrRequests/fakeData';
 import { useHistory } from 'react-router-dom';
 
-const BotList = (props) => {
+const CallBotList = ({ startDate, endDate }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -18,9 +15,10 @@ const BotList = (props) => {
 
   const [loading, setLoading] = useState(false);
 
+  /* eslint-disable no-unused-vars */
   const renderPackageCode = (packageCode) => {
     if (!packageCode) return '';
-    // eslint-disable-next-line no-unused-vars
+
     const [type, level, duration] = packageCode.split('-');
     const levelKey = PACKAGE_LEVEL[level];
     if (!duration) return t(levelKey);
@@ -31,13 +29,15 @@ const BotList = (props) => {
 
   const fetchApps = async () => {
     setLoading(true);
+    // eslint-disable-next-line no-console
     console.log("fetch Apps", paging);
     const data = await apis.statistics.getAppStatsGeneral({
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,
-      startDate: props.startDate,
-      endDate: props.endDate,
+      startDate,
+      endDate,
       });
+    // eslint-disable-next-line no-console
     console.log(data)
     setLoading(false);
 
@@ -46,6 +46,7 @@ const BotList = (props) => {
       setPaging({ ...paging, total: data.result.total});
     }
 
+    // eslint-disable-next-line no-console
     console.log(users);
   };
 
@@ -74,7 +75,7 @@ const BotList = (props) => {
   ];
 
   const handleRowClick = (appId) => {
-    history.push(`/customers/${appId}`);
+    history.push(`/asr/bot/${appId}`, {startDate, endDate});
   };
 
   const handleChangePage = (page) => {
@@ -82,8 +83,9 @@ const BotList = (props) => {
   }
 
   useEffect(() => {
-    fetchApps();
-  }, [paging.page, props.startDate, props.endDate]);
+    // eslint-disable-next-line no-console
+    fetchApps().catch(err => console.error(err));
+  }, [paging.page, startDate, endDate]);
 
   return (
     <Table
@@ -99,7 +101,7 @@ const BotList = (props) => {
   );
 };
 
-export default BotList;
+export default CallBotList;
 
 
 // {

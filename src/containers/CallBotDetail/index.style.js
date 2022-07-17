@@ -51,6 +51,13 @@ export const StyledStatsCardList = styled('div')`
   margin: 0px 0px;
 `;
 
+export const StyledCallBotDetailContainer = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: 24px 0px;
+  gap: 16px;
+`;
+
 const StyledDetailOrderContainer = styled('div')`
   display: flex;
   justify-content: start;

@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ROUTES from '@src/constants/routes';
+
+/* eslint-disable no-unused-vars */
 import {
   Dashboard,
   PermPhoneMsg,

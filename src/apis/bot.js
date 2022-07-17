@@ -1,8 +1,4 @@
-import axios from 'axios';
-
 import { RESOURCE } from '@src/constants';
-import { getCookie } from '@src/utils/cookie';
-import { API_URL } from '@src/configs';
 import api from './api';
 
 const getBotConfigDetails = async (appId) => {

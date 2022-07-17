@@ -1,46 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
-import { Button, Grid, TextField } from '@mui/material';
-import moment from 'moment';
+import { Button } from '@mui/material';
 
 import apis from '@src/apis';
 import ProcessHandler from '@src/components/ProcessHandler';
-import { CUSTOMER_STATS_FEATURE } from '@src/constants/customer';
 import SuperTabs from '@src/components/Tabs';
-import OrderTable from '@src/containers/Order/OrderTable';
+import { CUSTOMER_STATS_FEATURE } from '@src/constants/customer';
 import { StyleButtonsAction } from '@src/containers/Order/index.style';
 import iconExcel from '@src/assets/icons/excel.png';
-import BotCard
-  from '@src/containers/CustomerDetail/BotCard';
 
-import { fakePartnerAppInformation } from '@src/containers/CustomerDetail/fakeData';
-import StatsCardList from '@src/containers/CustomerDetail/StatsCardList';
-import BotCallSessionTable from '@src/containers/CustomerDetail/BotCallSessionTable';
+import BotCard from '@src/containers/CallBotDetail/BotCard';
+import StatsCardList from '@src/containers/CallBotDetail/StatsCardList';
+import BotCallSessionList from '@src/containers/CallBotDetail/BotCallSessionList';
 import CustomDatePickerRangeNew from "@src/components/CustomDatePickerRangeNew";
-import {StyledCustomerDetail, StyledStatsCardList} from './index.style';
+import {StyledCustomerDetail, StyledCallBotDetailContainer} from './index.style';
 
-const initialTimeRangeFilter = [
-  moment().subtract(90, 'd').toString(),
-  moment.toString()
-];
-
-const initialFilter = {
-  search: '',
-  createdAt: initialTimeRangeFilter,
-};
-
-
-const DetailCustomer = () => {
+const CallBotDetail = () => {
   const { t } = useTranslation();
-
-  const { customerId: appId } = useParams();
+  // eslint-disable-next-line no-unused-vars
   const { enqueueSnackbar } = useSnackbar();
+
+  const location = useLocation();
+
+  const initialTimeRangeFilter = [
+    location.state?.startDate || null,
+    location.state?.endDate || null
+  ];
+
+  const initialFilter = {
+    search: '',
+    createdAt: initialTimeRangeFilter,
+  };
+
+  const { appId } = useParams();
 
   const [paging, setPaging] = useState({ page: 1, total: 0 });
   const [activeTab, setActiveTab] = useState(CUSTOMER_STATS_FEATURE.STATUS);
   const [filter, setFilter] = useState(initialFilter);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
 
   const exportOrders = async () => {
@@ -61,6 +60,7 @@ const DetailCustomer = () => {
     setPaging({ ...paging, page: 1 });
   };
 
+  /* eslint-disable-next-line no-unused-vars */
   const handleChangePaging = ({ page, total }) => {
     setPaging({ page: page ?? 1, total: total ?? 0 });
   };
@@ -75,10 +75,10 @@ const DetailCustomer = () => {
 
   const tabs = [
     {
-      label: t('SESSION'),
+      label: t('callSessionList'),
       id: CUSTOMER_STATS_FEATURE.SESSION,
       panel: (
-        <BotCallSessionTable
+        <BotCallSessionList
           startDate={filter.createdAt[0]}
           endDate={filter.createdAt[1]}
           appId={appId}
@@ -117,20 +117,25 @@ const DetailCustomer = () => {
       </div>
 
       <ProcessHandler loading={loading}>
-        <Grid container spacing={2}>
-          <Grid item xs={6} sm={6}>
-            {/*<StyledStatsCardList>*/}
-              <StatsCardList
-                startDate={filter.createdAt[0]}
-                endDate={filter.createdAt[1]}
-                appId={appId}
-              />
-            {/*</StyledStatsCardList>*/}
-          </Grid>
-          <Grid item xs={6} sm={6}>
-            <BotCard appId={appId} />
-          </Grid>
-        </Grid>
+        <StyledCallBotDetailContainer>
+          <StatsCardList
+            startDate={filter.createdAt[0]}
+            endDate={filter.createdAt[1]}
+            appId={appId}
+          />
+          <BotCard appId={appId} />
+        </StyledCallBotDetailContainer>
+
+        {/* <Grid container spacing={2}> */}
+        {/*  <Grid item xs={6} sm={6}> */}
+        {/*    /!*<StyledStatsCardList>*!/ */}
+
+          {/*  /!*</StyledStatsCardList>*!/ */}
+          {/* </Grid> */}
+          {/* <Grid item xs={6} sm={6}> */}
+
+        {/*  </Grid> */}
+        {/* </Grid> */}
 
         <SuperTabs
           tabs={tabs}
@@ -143,4 +148,4 @@ const DetailCustomer = () => {
   );
 };
 
-export default DetailCustomer;
+export default CallBotDetail;

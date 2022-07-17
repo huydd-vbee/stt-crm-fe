@@ -15,6 +15,8 @@ import ProcessHandler from '@src/components/ProcessHandler';
 import { StyleButtonsAction } from './index.style';
 import OrderTable from './OrderTable';
 import CreateOrder from './CreateOrder';
+
+// eslint-disable-next-line no-unused-vars
 import {fakeOrders} from "./fakeData";
 
 const Order = () => {
