@@ -9,15 +9,15 @@ const DetailInvoiceCard = ({ invoice }) => {
   const rows = [
     {
       name: t('companyName'),
-      content: invoice.companyName || '--',
+      content: invoice?.companyName || '--',
     },
     {
       name: t('address'),
-      content: invoice.companyAddress || '--',
+      content: invoice?.companyAddress || '--',
     },
     {
       name: t('email'),
-      content: invoice.companyEmail || '--',
+      content: invoice?.companyEmail || '--',
     },
   ];
 

@@ -55,6 +55,10 @@ const StyledTable = styled(TableContainer)`
     border-bottom: 1px solid ${COLOR.divider};
     padding: 16px 12px;
   }
+
+  .image-banner {
+    width: 100px;
+  }
 `;
 
 export const StyledTableFooter = styled('div')`

@@ -19,8 +19,8 @@ const CustomTableBody = ({
   onSelectRow,
   onRowClick,
 }) => {
-  const handleRowClick = (rowId) => {
-    if (onRowClick) onRowClick(rowId);
+  const handleRowClick = (rowId, rowData) => {
+    if (onRowClick) onRowClick(rowId, rowData);
   };
 
   return (
@@ -36,7 +36,7 @@ const CustomTableBody = ({
           <TableRow
             key={rowData.id}
             className="body-row"
-            onClick={() => handleRowClick(rowData.id)}
+            onClick={() => handleRowClick(rowData.id, rowData)}
           >
             {selection && (
               <TableCell

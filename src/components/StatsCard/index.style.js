@@ -12,6 +12,7 @@ export const StyledStatsCard = styled(Box)`
   box-shadow: ${BOX_SHADOW};
 
   .main-stats {
+    height: 65px;
     display: flex;
     justify-content: space-between;
 
@@ -34,5 +35,37 @@ export const StyledStatsCard = styled(Box)`
         font-size: 20px;
       }
     }
+  }
+
+  .percent-wrapper {
+    margin: 0 0 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .percent {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .percent-text {
+    margin-left: 5px;
+    font-weight: 300;
+    font-size: 14px;
+    color: ${COLOR.success};
+  }
+
+  .chart-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .total-title {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    color: ${COLOR.lightText};
   }
 `;

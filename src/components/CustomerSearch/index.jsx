@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Autocomplete,
   CircularProgress,
   ListItemAvatar,
   ListItemButton,
@@ -11,10 +10,15 @@ import { useTranslation } from 'react-i18next';
 import apis from '@src/apis';
 import debounce from '@src/utils/debounce';
 import BadgeAvatar from '@src/components/BadgeAvatar';
-
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { StyledAutoComplete } from './index.style';
 
 const SEARCH_ROW_LIMIT = 5;
+
+const filterOptions = createFilterOptions({
+  stringify: ({ firstName, lastName, email, phoneNumber }) =>
+    `${firstName} ${lastName} ${email} ${phoneNumber}`,
+});
 
 /**
  * Search customer with AutoComplete component
@@ -121,6 +125,7 @@ const CustomerSearch = ({ customer, error, onChange }) => {
         onClose={() => {
           setOpen(false);
         }}
+        filterOptions={filterOptions}
         isOptionEqualToValue={(option, val) => option.id === val.id}
         options={users}
         loading={loading}

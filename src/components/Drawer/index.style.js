@@ -23,5 +23,6 @@ export const StyledDrawer = styled(Drawer)`
 
   .drawer-content {
     padding: 20px;
+    max-width: 360px;
   }
 `;

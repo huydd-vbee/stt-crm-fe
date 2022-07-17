@@ -1,13 +1,27 @@
 export default {
   UNAUTHORIZED: '/403',
   DASHBOARD: '/dashboard',
-  CUSTOMER: '/customers',
   AFFILIATE: '/affiliate',
   NOTIFICATION_MANAGEMENT: '/notification',
   EMAIL_MANAGEMENT: '/email',
   FAQ: '/faq',
 
-  // TTS
+  // CUSTOMERS
+  CUSTOMER: '/customers',
+  CUSTOMER_DETAIL: '/customers/:customerId',
+
+  // ASR REQUEST
+  ASR_REQUEST_BY_BOT: '/asr/bot',
+  ASR_REQUEST_BY_BOT_DETAIL: '/asr/bot/:appId',
+  ASR_REQUEST_BY_SESSION: '/asr/session',
+
+  // VALIDATION
+  VALIDATION_LIVE: '/validation/live',
+  VALIDATION_MESSAGE: '/validation/:messageId',
+  VALIDATION_SESSION: '/validation/:sessionId',
+
+
+  // STT
   VOICE_MANAGEMENT: '/voice',
   DICTIONARY_MANAGEMENT: '/dictionary',
   BLACKLIST_MANAGEMENT: '/blacklist',

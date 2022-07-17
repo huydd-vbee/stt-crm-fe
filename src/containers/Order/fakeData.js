@@ -1,4 +1,4 @@
-{
+export const fakeOrders = {
   "result": {
       "orders": [
           {

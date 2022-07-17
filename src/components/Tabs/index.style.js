@@ -11,6 +11,7 @@ export const StyledTabsWrapper = styled('div')`
     display: flex;
     border-color: ${COLOR.divider};
     justify-content: space-between;
+    flex-wrap: wrap-reverse;
   }
 `;
 

@@ -4,4 +4,9 @@ const IDENTITY_PROVIDER = {
   EMAIL: 'email',
 };
 
-export { IDENTITY_PROVIDER };
+const CUSTOMER_STATS_FEATURE = {
+  SESSION: 'session',
+  STATUS: 'status'
+}
+
+export { IDENTITY_PROVIDER, CUSTOMER_STATS_FEATURE };

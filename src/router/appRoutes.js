@@ -2,9 +2,10 @@ import Unauthorized from '@src/pages/Unauthorized';
 import ComingSoon from '@src/pages/ComingSoon';
 
 import ROUTES from '@src/constants/routes';
-import Customers from '@src/pages/Customer';
-import DetailOrder from '@src/pages/DetailOrder';
+import AsrRequests from '@src/pages/AsrRequests';
+import DetailCustomer from '@src/pages/DetailCustomer';
 import Order from '@src/pages/Order';
+import DetailOrder from '@src/pages/DetailOrder';
 import Package from '@src/pages/Package';
 
 export default [
@@ -24,11 +25,48 @@ export default [
   },
   {
     path: ROUTES.CUSTOMER,
-    component: Customers,
+    component: AsrRequests,
     exact: true,
     restricted: false,
     isPrivate: true,
   },
+  {
+    path: ROUTES.CUSTOMER_DETAIL,
+    component: DetailCustomer,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.ASR_REQUEST_BY_BOT,
+    component: AsrRequests,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.ASR_REQUEST_BY_SESSION,
+    component: ComingSoon,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.VALIDATION_LIVE,
+    component: ComingSoon,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.VALIDATION_SESSION,
+    component: ComingSoon,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+
+
   {
     path: ROUTES.VOICE_MANAGEMENT,
     component: ComingSoon,

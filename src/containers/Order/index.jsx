@@ -15,6 +15,7 @@ import ProcessHandler from '@src/components/ProcessHandler';
 import { StyleButtonsAction } from './index.style';
 import OrderTable from './OrderTable';
 import CreateOrder from './CreateOrder';
+import {fakeOrders} from "./fakeData";
 
 const Order = () => {
   const { t } = useTranslation();

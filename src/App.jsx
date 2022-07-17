@@ -4,6 +4,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import Keycloak from 'keycloak-js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { SnackbarProvider } from 'notistack';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import store from './redux/store';
 import AppRouter from './router';
@@ -28,19 +30,21 @@ const App = () => {
     <ReactKeycloakProvider
       authClient={keycloak}
       initOptions={{
-        onLoad: 'login-required', // or check-sso
+        onLoad: 'login-required',
         refreshToken,
       }}
       onTokens={handleReceivingTokens}
     >
       <ThemeProvider theme={theme}>
-        <Provider store={store()}>
-          <SnackbarProvider preventDuplicate maxSnack={3} ref={notistackRef}>
-            <NotiHandler>
-              <AppRouter />
-            </NotiHandler>
-          </SnackbarProvider>
-        </Provider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Provider store={store()}>
+            <SnackbarProvider preventDuplicate maxSnack={3} ref={notistackRef}>
+              <NotiHandler>
+                <AppRouter />
+              </NotiHandler>
+            </SnackbarProvider>
+          </Provider>
+        </LocalizationProvider>
       </ThemeProvider>
     </ReactKeycloakProvider>
   );

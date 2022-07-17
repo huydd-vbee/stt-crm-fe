@@ -88,5 +88,7 @@
   "unauthorizedDescription": "Để vào trang này, bạn cần quyền Moderator trở lên",
   "goHome": "Về trang chủ",
   "comingSoonTitle": "Chúng tôi sẽ sớm đi vào hoạt động  🚀",
-  "back": "Quay trở lại"
+  "back": "Quay trở lại",
+  "stats": "Quản lý request",
+  "computingResources": "Quản lý tài nguyên"
 }

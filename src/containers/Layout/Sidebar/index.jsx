@@ -43,13 +43,13 @@ const PlaceRightBottom = ({ isSubGroup, item, onItemClick, selectedKeys }) => {
       }`}
     >
       <List component="div" disablePadding className="sub-menu">
-        {item.subMenu.map((menuItem, index) => {
+        {item.subMenu.map((menuItem) => {
           const isSubmenuActive = selectedKeys.at(-1) === menuItem.key;
           const isGroupMenu = hasChildren(menuItem);
 
           return (
             <ListItem
-              key={index.toString()}
+              key={menuItem.key}
               button={!isGroupMenu}
               className={`nested menu-item ${
                 ((isGroupMenu && selectedKeys.includes(menuItem.key)) ||
@@ -185,9 +185,9 @@ const MultiLevel = ({
       )}
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {children.map((child, key) => (
+          {children.map((child) => (
             <MenuItem
-              key={key.toString()}
+              key={child.key}
               item={child}
               mobile={mobile}
               collapsed={collapsed}
@@ -290,9 +290,9 @@ const Sidebar = (props) => {
         </Toolbar>
         <div className="content">
           <List>
-            {sidebarMenu.map((item, index) => (
+            {sidebarMenu.map((item) => (
               <MenuItem
-                key={index.toString()}
+                key={item.key}
                 item={item}
                 collapsed={collapsed}
                 onItemClick={handleClickMenu}
@@ -345,9 +345,9 @@ const Sidebar = (props) => {
           </Toolbar>
           <div className="mobile-drawer">
             <List>
-              {sidebarMenu.map((item, index) => (
+              {sidebarMenu.map((item) => (
                 <MenuItem
-                  key={index.toString()}
+                  key={item.key}
                   item={item}
                   onItemClick={handleClickMenu}
                   selectedKeys={selectedKeys}

@@ -66,7 +66,7 @@ const CustomTableHeader = ({
         )}
         {showNumber && (
           <TableCell className="header-cell" align="center">
-            <Typography className="header-title">{t('No')}</Typography>
+            <Typography className="header-title">{t('no.')}</Typography>
           </TableCell>
         )}
         {columns.map((column) => (

@@ -31,7 +31,7 @@ const BadgeAvatar = ({
       <BadgeAvatarStyled
         overlap="circular"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        active={active}
+        active={active.toString()}
         variant="dot"
       >
         <Avatar src={img} variant={shape || ''} sx={styledAvatar}>

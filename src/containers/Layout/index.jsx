@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
   const toggleSidebarOnMobile = () => setOpenSidebarMobile((prev) => !prev);
 
   return (
-    <StyledLayout collapsed={collapsed}>
+    <StyledLayout collapsed={collapsed ? 1 : undefined}>
       <Sidebar
         collapsed={collapsed}
         toggle={toggle}
