@@ -13,6 +13,7 @@ import CustomDatePickerRangeNew from '@src/components/CustomDatePickerRangeNew';
 import { StyledCustomers, StyleButtonsAction } from './index.style';
 import StatsCardList from './StatsCardList';
 import CallBotList from './CallBotList';
+import CallSessionList from "./CallSessionList";
 
 const AsrRequests = () => {
   const { t } = useTranslation();
@@ -76,6 +77,7 @@ const AsrRequests = () => {
         <CallBotList
           startDate={filter.createdAt[0]}
           endDate={filter.createdAt[1]}
+          paging={paging}
           onChangePage={handleChangePaging}
         />
       ),
@@ -83,7 +85,14 @@ const AsrRequests = () => {
     {
       id: 'callSessionList',
       label: t('callSessionList'),
-      // TODO: panel
+      panel: (
+        <CallSessionList
+          startDate={filter.createdAt[0]}
+          endDate={filter.createdAt[1]}
+          paging={paging}
+          onChangePage={handleChangePaging}
+        />
+      ),
     }
   ];
 

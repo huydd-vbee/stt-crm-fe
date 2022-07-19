@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSnackbar } from "notistack";
 import apis from "@src/apis";
 import IconHeader from '@src/assets/icons/config-icon.png';
-import CardComponent from './CardComponent';
+import CardComponent from '@src/components/CardComponent';
 
 const BotCard = ({appId}) => {
   const { t } = useTranslation();

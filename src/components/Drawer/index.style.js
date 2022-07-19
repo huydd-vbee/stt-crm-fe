@@ -4,7 +4,7 @@ import { COLOR } from '@src/styles/color';
 
 export const StyledDrawer = styled(Drawer)`
   .MuiPaper-root {
-    min-width: 400px;
+    min-width: 360px;
     width: ${({ width }) => width || ''};
     border-radius: 5px 0px 0px 5px;
   }

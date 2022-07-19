@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import Table from '@src/components/Table';
-import { delimitNumber } from '@src/utils/number';
 import { PACKAGE_DURATION, PACKAGE_LEVEL } from '@src/constants/package';
 import { PAGINATION_LIMIT } from '@src/constants';
 import apis from '@src/apis';
-import {fakeUsers} from '@src/containers/AsrRequests/fakeData';
 import { useHistory } from 'react-router-dom';
+import {Typography} from "@mui/material";
+import moment from "moment";
 
-const BotList = (props) => {
+const CallSessionList = ({ startDate, endDate }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const [paging, setPaging] = useState({ page: 1, total: 0 });
-  const [users, setUsers] = useState([]);
-
+  const [callSessions, setCallSessions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [paging, setPaging] = useState({ page: 1, total: 0 });
 
+  // eslint-disable-next-line no-unused-vars
   const renderPackageCode = (packageCode) => {
     if (!packageCode) return '';
     // eslint-disable-next-line no-unused-vars
@@ -29,65 +28,93 @@ const BotList = (props) => {
     return `${t(levelKey)} - ${t(durationKey)}`;
   };
 
-  const fetchApps = async () => {
+  const handleChangePage = (newPage) => setPaging({ ...paging, page: newPage });
+
+  const fetchCallSessionList = async () => {
     setLoading(true);
-    console.log("fetch Apps", paging);
-    const data = await apis.statistics.getAppStatsGeneral({
+    // eslint-disable-next-line no-console
+    console.log("fetch Call Session List", paging);
+    const data = await apis.requests.getCallSessions({
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,
-      startDate: props.startDate,
-      endDate: props.endDate,
-      });
+      startDate,
+      endDate,
+    });
+    // eslint-disable-next-line no-console
     console.log(data)
     setLoading(false);
 
     if (data.status) {
-      setUsers(data.result.items);
-      setPaging({ ...paging, total: data.result.total});
+      setCallSessions(data.result.items);
+      setPaging({ ...paging, total: data.result.total });
     }
-
-    console.log(users);
+    // eslint-disable-next-line no-console
+    console.log(callSessions);
   };
 
   const columns = [
+    {
+      field: 'sessionId',
+      title: t('sessionId'),
+      sortable: true,
+      align: 'left',
+      render: (rowData) => (
+        <Typography variant="subtitle2">
+          {rowData.id || '--'}
+        </Typography>
+      ),
+    },
     {
       field: 'botName',
       title: t('botName'),
       sortable: true,
       align: 'left',
-      render: (row) => `${row.botDetails.botName || ''}`,
+      render: (rowData) => (
+        <Typography variant="subtitle2">
+          {rowData.app.botName || '--'}
+        </Typography>
+      ),
     },
     {
-      field: 'avgMessagePerCall',
-      title: t('avgMessagePerCall'),
+      field: 'noMsgs',
+      title: t('noMessages'),
       sortable: false,
       align: 'left',
-      render: (row) => `${Math.round(row.avgMessageEachCall * 100) / 100 || 0}`,
+      render: (rowData) => `${rowData.noMessages || ''}`,
     },
     {
-      field: 'noCall',
-      title: t('noCall'),
+      field: 'startedAt',
+      title: t('startTime'),
       sortable: false,
-      align: 'left',
-      render: (row) => `${row.noCall || 0}`,
-    }
+      align: 'center',
+      render: (rowData) =>
+        `${moment(rowData.start).format('HH:mm:ss-DD/MM/YYYY')}`,
+    },
+    {
+      field: 'endedAt',
+      title: t('endTime'),
+      sortable: false,
+      align: 'center',
+      render: (rowData) =>
+        `${moment(rowData.end).format('HH:mm:ss-DD/MM/YYYY')}`,
+    },
   ];
 
-  const handleRowClick = (appId) => {
-    history.push(`/customers/${appId}`);
+  const handleRowClick = (sessionId, sessionData) => {
+    // eslint-disable-next-line no-console
+    console.info(sessionData);
+    const {botId: appId} = sessionData.app;
+    history.push(`/history/app/${appId}/session/${sessionId}`);
   };
 
-  const handleChangePage = (page) => {
-    setPaging({ ...paging, page });
-  }
-
   useEffect(() => {
-    fetchApps();
-  }, [paging.page, props.startDate, props.endDate]);
+    // eslint-disable-next-line no-console
+    fetchCallSessionList().catch(err => console.error(err));
+  }, [paging.page, startDate, endDate]);
 
   return (
     <Table
-      data={users}
+      data={callSessions}
       columns={columns}
       total={paging.total}
       page={paging.page}
@@ -99,7 +126,7 @@ const BotList = (props) => {
   );
 };
 
-export default BotList;
+export default CallSessionList;
 
 
 // {

@@ -17,10 +17,14 @@ const BotCallSessionList = ({startDate, endDate, appId}) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [sessions, setSessions] = useState([]);
-  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [paging, setPaging] = useState({ page: 1, total: 0 });
+
   const handleChangePage = (newPage) => setPaging({ ...paging, page: newPage });
+
+  const handleRowClick = (sessionId) => {
+    history.push(`/history/app/${appId}/session/${sessionId}`);
+  };
 
   const fetchSession = async () => {
     setLoading(true);
@@ -60,8 +64,8 @@ const BotCallSessionList = ({startDate, endDate, appId}) => {
       render: (rowData) =>
         `${rowData.noMessages || ''}`,
     }, {
-      field: 'createdAt',
-      title: t('createTime'),
+      field: 'startedAt',
+      title: t('startTime'),
       sortable: false,
       align: 'center',
       render: (rowData) =>
@@ -89,8 +93,10 @@ return (
       data={sessions}
       total={paging.total}
       page={paging.page}
+      loading={loading}
       showNumber
       onChangePage={handleChangePage}
+      onRowClick={handleRowClick}
     />
   );
 };

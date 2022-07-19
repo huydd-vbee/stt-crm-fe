@@ -10,10 +10,9 @@ const CallBotList = ({ startDate, endDate }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const [paging, setPaging] = useState({ page: 1, total: 0 });
-  const [users, setUsers] = useState([]);
-
+  const [callBots, setCallBots] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [paging, setPaging] = useState({ page: 1, total: 0 });
 
   /* eslint-disable no-unused-vars */
   const renderPackageCode = (packageCode) => {
@@ -27,10 +26,10 @@ const CallBotList = ({ startDate, endDate }) => {
     return `${t(levelKey)} - ${t(durationKey)}`;
   };
 
-  const fetchApps = async () => {
+  const fetchCallBotList = async () => {
     setLoading(true);
     // eslint-disable-next-line no-console
-    console.log("fetch Apps", paging);
+    console.log("fetch Call Bot List", paging);
     const data = await apis.statistics.getAppStatsGeneral({
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,
@@ -42,12 +41,12 @@ const CallBotList = ({ startDate, endDate }) => {
     setLoading(false);
 
     if (data.status) {
-      setUsers(data.result.items);
+      setCallBots(data.result.items);
       setPaging({ ...paging, total: data.result.total});
     }
 
     // eslint-disable-next-line no-console
-    console.log(users);
+    console.log(callBots);
   };
 
   const columns = [
@@ -75,21 +74,19 @@ const CallBotList = ({ startDate, endDate }) => {
   ];
 
   const handleRowClick = (appId) => {
-    history.push(`/asr/bot/${appId}`, {startDate, endDate});
+    history.push(`/history/app/${appId}`, {startDate, endDate});
   };
 
-  const handleChangePage = (page) => {
-    setPaging({ ...paging, page });
-  }
+  const handleChangePage = (newPage) => setPaging({ ...paging, page: newPage });
 
   useEffect(() => {
     // eslint-disable-next-line no-console
-    fetchApps().catch(err => console.error(err));
+    fetchCallBotList().catch(err => console.error(err));
   }, [paging.page, startDate, endDate]);
 
   return (
     <Table
-      data={users}
+      data={callBots}
       columns={columns}
       total={paging.total}
       page={paging.page}

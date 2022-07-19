@@ -27,12 +27,12 @@ export const sidebarMenu = [
     icon: <PermPhoneMsg />,
     subMenu: [
       {
-        key: 'statistics',
-        route: ROUTES.ASR_REQUEST_BY_BOT,
+        key: 'history',
+        route: ROUTES.ASR_HISTORY,
       },
       {
-        key: 'validation',
-        route: ROUTES.ASR_REQUEST_BY_SESSION,
+        key: 'experiment',
+        route: ROUTES.ASR_EXPERIMENT,
       },
     ],
   },

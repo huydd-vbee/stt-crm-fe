@@ -17,18 +17,20 @@ const CardComponent = ({ rows, iconHeader, title }) => (
         <Typography variant="subtitle2">{title}</Typography>
       </div>
     </CardContent>
-    <Table aria-label="simple table">
-      <TableBody>
-        {rows.map((row) => (
-          <TableRow className="style-border-table"  key={row.name}>
-            <TableCell className="style-title-table">{row.name}</TableCell>
-            <TableCell className="style-data-table" align="left">
-              {row.content}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <CardContent>
+      <Table aria-label="simple table">
+        <TableBody>
+          {rows && rows.map((row) => (
+            <TableRow className="style-border-table"  key={row.name}>
+              <TableCell className="style-title-table">{row.name}</TableCell>
+              <TableCell className="style-data-table" align={row.align || "left"}>
+                {row.content}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </CardContent>
   </StyledOrderDetailCard>
 );
 export default CardComponent;

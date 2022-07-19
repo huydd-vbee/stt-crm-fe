@@ -4,6 +4,7 @@ import ComingSoon from '@src/pages/ComingSoon';
 import ROUTES from '@src/constants/routes';
 import AsrRequests from '@src/pages/AsrRequests';
 import CallBotDetail from '@src/pages/CallBotDetail';
+import CallSessionDetail from '@src/pages/CallSessionDetail';
 import Order from '@src/pages/Order';
 import DetailOrder from '@src/pages/DetailOrder';
 import Package from '@src/pages/Package';
@@ -24,21 +25,42 @@ export default [
     isPrivate: true,
   },
   {
-    path: ROUTES.ASR_REQUEST_BY_BOT_DETAIL,
-    component: CallBotDetail,
-    exact: true,
-    restricted: false,
-    isPrivate: true,
-  },
-  {
-    path: ROUTES.ASR_REQUEST_BY_BOT,
+    path: ROUTES.ASR_HISTORY,
     component: AsrRequests,
     exact: true,
     restricted: false,
     isPrivate: true,
   },
   {
-    path: ROUTES.ASR_REQUEST_BY_SESSION,
+    path: ROUTES.ASR_HISTORY_BY_APP,
+    component: ComingSoon,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.ASR_HISTORY_BY_APP_DETAIL,
+    component: CallBotDetail,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.ASR_HISTORY_BY_SESSION,
+    component: ComingSoon,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.ASR_HISTORY_BY_SESSION_DETAIL,
+    component: CallSessionDetail,
+    exact: true,
+    restricted: false,
+    isPrivate: true,
+  },
+  {
+    path: ROUTES.ASR_EXPERIMENT,
     component: ComingSoon,
     exact: true,
     restricted: false,
@@ -58,8 +80,6 @@ export default [
     restricted: false,
     isPrivate: true,
   },
-
-
   {
     path: ROUTES.VOICE_MANAGEMENT,
     component: ComingSoon,

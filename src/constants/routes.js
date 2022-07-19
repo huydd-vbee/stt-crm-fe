@@ -10,10 +10,15 @@ export default {
   CUSTOMER: '/customers',
   CUSTOMER_DETAIL: '/customers/:customerId',
 
-  // ASR REQUEST
-  ASR_REQUEST_BY_BOT: '/asr/bot',
-  ASR_REQUEST_BY_BOT_DETAIL: '/asr/bot/:appId',
-  ASR_REQUEST_BY_SESSION: '/asr/session',
+  // ASR HISTORY
+  ASR_HISTORY: '/history',
+  ASR_HISTORY_BY_APP: '/history/app',
+  ASR_HISTORY_BY_APP_DETAIL: '/history/app/:appId',
+  ASR_HISTORY_BY_SESSION: '/history/app/:appId/session',
+  ASR_HISTORY_BY_SESSION_DETAIL: '/history/app/:appId/session/:sessionId',
+
+  // ASR EXPERIMENT
+  ASR_EXPERIMENT: '/experiment',
 
   // VALIDATION
   VALIDATION_LIVE: '/validation/live',

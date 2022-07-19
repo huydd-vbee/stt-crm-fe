@@ -5,4 +5,11 @@ import * as users from './user';
 import * as requests from './requests';
 import * as bot from './bot';
 
-export default { orders, requests, bot, statistics, packages, users };
+export default {
+  orders,
+  requests,
+  bot,
+  statistics,
+  packages,
+  users
+};
