@@ -30,7 +30,7 @@ const CallBotList = ({ startDate, endDate }) => {
     setLoading(true);
     // eslint-disable-next-line no-console
     console.log("fetch Call Bot List", paging);
-    const data = await apis.statistics.getAppStatsGeneral({
+    const data = await apis.statistics.getRequestStatsByApp({
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,
       startDate,

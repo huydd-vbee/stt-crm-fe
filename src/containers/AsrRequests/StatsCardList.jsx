@@ -66,7 +66,7 @@ const StatsCardList = ({ startDate, endDate }) => {
 
   const fetchStatistics = async () => {
     setLoadingStats(true);
-    const data = await apis.statistics.getRequestStats({
+    const data = await apis.statistics.getRequestStatusStats({
       startDate,
       endDate,
     });

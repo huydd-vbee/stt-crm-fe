@@ -2,6 +2,7 @@ import Unauthorized from '@src/pages/Unauthorized';
 import ComingSoon from '@src/pages/ComingSoon';
 
 import ROUTES from '@src/constants/routes';
+import Dashboard from '@src/pages/Dashboard';
 import AsrRequests from '@src/pages/AsrRequests';
 import CallBotDetail from '@src/pages/CallBotDetail';
 import CallSessionDetail from '@src/pages/CallSessionDetail';
@@ -19,7 +20,7 @@ export default [
   },
   {
     path: ROUTES.DASHBOARD,
-    component: ComingSoon,
+    component: Dashboard,
     exact: true,
     restricted: false,
     isPrivate: true,

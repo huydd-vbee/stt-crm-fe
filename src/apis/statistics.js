@@ -4,7 +4,22 @@ import axios from 'axios';
 import { API_URL } from '@src/configs';
 import API from './api';
 
-const getRequestStats = async ({startDate, endDate, appId}) => {
+const getRequestResponseTimeStats = async ({ startDate, endDate, general }) => {
+  return {status: 0};
+  // eslint-disable-next-line no-unreachable
+  try {
+    const response = await API({
+      method: 'GET',
+      url: `${RESOURCE.STATISTICS}/requests/response-time`,
+      params: { startDate, endDate, general },
+    });
+    return response;
+  } catch (error) {
+    return error.response?.data;
+  }
+};
+
+const getRequestStatusStats = async ({startDate, endDate, appId}) => {
   const response = await API({
     method: 'GET',
     url: `${RESOURCE.STATISTICS}/requests`,
@@ -13,12 +28,12 @@ const getRequestStats = async ({startDate, endDate, appId}) => {
   return response;
 };
 
-const getRequestStatsByAppId = async ({startDate, endDate, appId}) => {
+const getRequestStatsByApp = async ({limit, offset, startDate, endDate}) => {
   try {
     const response = await API({
       method: 'GET',
-      url: `${RESOURCE.STATISTICS}/requests/app/${appId}`,
-      params: { startDate, endDate, appId },
+      url: `${RESOURCE.STATISTICS}/apps`,
+      params: { limit, offset, startDate, endDate },
     });
     return response;
   } catch (error) {
@@ -26,12 +41,12 @@ const getRequestStatsByAppId = async ({startDate, endDate, appId}) => {
   }
 };
 
-const getAppStatsGeneral = async ({limit, offset, startDate, endDate}) => {
+const getRequestStatsByAppId = async ({startDate, endDate, appId}) => {
   try {
     const response = await API({
       method: 'GET',
-      url: `${RESOURCE.STATISTICS}/apps`,
-      params: { limit, offset, startDate, endDate },
+      url: `${RESOURCE.STATISTICS}/requests/app/${appId}`,
+      params: { startDate, endDate, appId },
     });
     return response;
   } catch (error) {
@@ -58,8 +73,9 @@ const exportExcelFile = async ({ status }) => {
 };
 
 export {
-  getRequestStats,
+  getRequestStatusStats,
+  getRequestResponseTimeStats,
+  getRequestStatsByApp,
   getRequestStatsByAppId,
-  getAppStatsGeneral,
   exportExcelFile
 };

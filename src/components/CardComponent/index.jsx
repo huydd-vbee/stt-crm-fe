@@ -14,7 +14,7 @@ const CardComponent = ({ rows, iconHeader, title }) => (
     <CardContent>
       <div className="header-card-style">
         <img src={iconHeader} alt="icon" />
-        <Typography variant="subtitle2">{title}</Typography>
+        <Typography variant="h6">{title}</Typography>
       </div>
     </CardContent>
     <CardContent>

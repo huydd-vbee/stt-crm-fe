@@ -1,74 +1,109 @@
 import React, { useState } from 'react';
-import { Button, Typography } from '@mui/material';
-import { useKeycloak } from '@react-keycloak/web';
-import customerIcon from '@src/assets/icons/customer-circle.png';
-import StatsCard from '@src/components/StatsCard';
-import Table from '@src/components/Table';
-import { demoTableData } from './fakeData';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
-const columns = [
-  {
-    field: 'name', // required
-    title: 'Name',
-    sortable: false,
-    align: 'left',
-    render: (rowData) => <Typography>{rowData.name}</Typography>,
-  },
-  {
-    field: 'birthYear',
-    title: 'Birth Year',
-    sortable: true,
-    align: 'left',
-  },
-  {
-    field: 'birthCity',
-    title: 'Birth City',
-    sortable: false,
-    align: 'center',
-  },
-];
+// eslint-disable-next-line no-unused-vars
+import SelectComponent from '@src/components/Select';
+import CustomDatePickerRangeNew from '@src/components/CustomDatePickerRangeNew';
+import SuperTabs from '@src/components/Tabs';
+
+import { IDENTITY_PROVIDER } from '@src/constants/customer';
+// eslint-disable-next-line no-unused-vars
+import iconExcel from '@src/assets/icons/excel.png';
+
+// eslint-disable-next-line no-unused-vars
+import { StyledCustomers, ExcelButton } from './index.style';
+// eslint-disable-next-line no-unused-vars
+
+import RequestStats from './RequestStats';
 
 const Dashboard = () => {
-  const { keycloak } = useKeycloak();
-  const [page, setPage] = useState(1);
 
-  const handleChangePage = (newPage) => setPage(newPage);
+  const { t } = useTranslation();
+
+  const initialTimeRangeFilter = [
+    moment().subtract(90, 'd').toString(),
+    moment().toString(),
+  ];
+
+  const initialFilter = () => ({
+    createdAt: initialTimeRangeFilter,
+    provider: '',
+    usagePackage: '',
+  });
+
+  // eslint-disable-next-line no-unused-vars
+  const providers = Object.keys(IDENTITY_PROVIDER).map((item) => ({
+    value: IDENTITY_PROVIDER[item],
+    label:
+      IDENTITY_PROVIDER[item] === IDENTITY_PROVIDER.ALL
+        ? t('all')
+        : IDENTITY_PROVIDER[item],
+  }));
+
+  const [filter, setFilter] = useState(initialFilter);
+
+
+  // eslint-disable-next-line no-unused-vars
+  const handleChangeFilter = ({ value, name }) => {
+    setFilter({ ...filter, [name]: value });
+  };
+
+  const handleChangeDatePickerRange = (value) => {
+    setFilter({ ...filter, createdAt: value });
+  };
+
+  const handleResetFilter = () => setFilter(initialFilter);
+
+  const handleChangeTab = () => {
+  };
+
+  const tabs = [
+    {
+      id: 'overview',
+      label: t('overview'),
+      panel: (
+        <RequestStats
+          startDate={filter.createdAt[0]}
+          endDate={filter.createdAt[1]}
+        />
+      ),
+    },
+  ];
+
+  const renderDashboardAction = (
+    <div className='styled-action-row'>
+      {/* <ExcelButton */}
+      {/*  variant='outlined' */}
+      {/*  startIcon={<img src={iconExcel} alt='icon' />} */}
+      {/*  color='secondary' */}
+      {/* > */}
+      {/*  {t('exportExcel')} */}
+      {/* </ExcelButton> */}
+      {/* <SelectComponent */}
+      {/*  name='provider' */}
+      {/*  label={t('provider')} */}
+      {/*  data={providers} */}
+      {/*  value={filter.provider} */}
+      {/*  handleChangeFilter={handleChangeFilter} */}
+      {/* /> */}
+      <CustomDatePickerRangeNew
+        value={filter.createdAt}
+        isRefresh
+        onChange={handleChangeDatePickerRange}
+        handleRefresh={handleResetFilter}
+      />
+    </div>
+  );
 
   return (
-    <div>
-      {keycloak.authenticated && (
-        <div>
-          <Button
-            variant="contained"
-            onClick={() => keycloak.accountManagement()}
-          >
-            account management
-          </Button>
-          <Button variant="outlined" onClick={() => keycloak.logout()}>
-            logout
-          </Button>
-
-          {/* Demo using StatsCard */}
-          <StatsCard
-            title="Tổng khách hàng"
-            number="400.000"
-            icon={customerIcon}
-            width="21.5%"
-            minWidth="235px"
-          />
-
-          {/* Demo using Table */}
-          <Table
-            columns={columns}
-            data={demoTableData}
-            total={14}
-            page={page}
-            showNumber
-            onChangePage={handleChangePage}
-          />
-        </div>
-      )}
-    </div>
+    <StyledCustomers>
+      <SuperTabs
+        tabs={tabs}
+        actionComponents={renderDashboardAction}
+        onChangeTab={handleChangeTab}
+      />
+    </StyledCustomers>
   );
 };
 

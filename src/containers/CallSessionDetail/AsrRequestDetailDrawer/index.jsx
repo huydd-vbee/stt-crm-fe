@@ -71,7 +71,7 @@ const AsrRequestDetailDrawer = ({
 
   return (
     <CustomDrawer
-      title={t('ASR Request Details')}
+      title={t('asrRequestDetails')}
       open={open}
       onClose={onClose}
     >

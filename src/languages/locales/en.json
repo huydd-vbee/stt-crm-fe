@@ -100,6 +100,11 @@
   "goHome": "Go home",
   "comingSoonTitle": "We will be up and running soon 🚀",
   "back": "Back",
+  "vietnamese": "Vietnamese",
+  "english": "English",
+  "profile": "Profile",
+  "logout": "Logout",
+
   "totalRequest": "Total request",
   "totalSuccessRequest": "Success request",
   "totalFailedRequest": "Failed request",
@@ -143,6 +148,23 @@
   "appName": "App Name",
   "clientPhoneNumber": "Client Phone Number",
 
+  "asrRequestDetails": "ASR Request Details",
+  "vadConfig": "VAD CONFIG",
+  "skip": "Skip",
+  "noInputTimeout": "No Input Timeout (ms)",
+  "speechCompleteTimeoutMs": "Speech Complete Timeout (ms)",
+  "asrConfig": "ASR CONFIG",
+  "model": "Model",
+  "domain": "Domain",
+  "joint": "Joint-Type",
+  "audioConfig": "RECORDING CONFIG",
+  "sampleRateHertz": "Sample Rate (Hz)",
+  "sampleSizeByte": "Sample Size (byte)",
+  "channels": "Channels",
+  "asrRequestResult": "RESULT",
+  "transcript": "Transcript",
+  "fileKey": "File Key in S3",
+
   "botComplexity": "Bot Complexity",
   "botMaxDepth": "Max Plot Depth",
   "botAvgDepth": "Average Plot Depth",
@@ -159,9 +181,16 @@
 
   "today": "Today",
   "lastWeek": "Last week",
+  "lastMonth": "Last month",
   "30DaysAgo": "30 days ago",
   "thisMonth": "This month",
-  "lastMonth": "Last month",
   "90DaysAgo": "90 days ago",
-  "thisYear": "This year"
+  "thisYear": "This year",
+  "to": "To",
+  "start": "Start",
+  "fromDate": "From date",
+  "endDate": "End date",
+  "startDate": "Start date",
+
+  "searchPlaceholder": "Search PlaceHolder"
 }

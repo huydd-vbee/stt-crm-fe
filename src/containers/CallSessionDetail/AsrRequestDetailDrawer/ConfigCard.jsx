@@ -13,24 +13,24 @@ const ConfigCard = ({asrRequest}) => {
   const vadConfig = requestConfig.configAudio.vadParams && !requestConfig.configAudio.vadParams.skip
     ? ([
       {
-        name: t('Skip'),
+        name: t('skip'),
         content: `False`,
         align: "right"
       },
       {
         name: t('noInputTimeout'),
-        content: `${requestConfig?.configAudio.vadParams.noInputTimeoutMs || '--'} `,
+        content: `${requestConfig?.configAudio.vadParams?.noInputTimeoutMs || '--'} `,
         align: "right"
       },
       {
-        name: t('fileKey'),
-        content: `${requestConfig?.configAudio.vadParams.speechCompleteTimeoutMs || '--'}`,
+        name: t('speechCompleteTimeoutMs'),
+        content: `${requestConfig?.configAudio.vadParams?.speechCompleteTimeoutMs || '--'}`,
         align: "right"
       },
     ])
     : ([
       {
-        name: t('Skip'),
+        name: t('skip'),
         content: `True`,
         align: "right"
       },
