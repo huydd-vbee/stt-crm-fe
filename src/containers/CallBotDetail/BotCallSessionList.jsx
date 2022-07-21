@@ -28,7 +28,7 @@ const BotCallSessionList = ({startDate, endDate, appId}) => {
 
   const fetchSession = async () => {
     setLoading(true);
-    const data = await apis.requests.getCallSessionsByApp({
+    const data = await apis.session.getCallSessionsByApp({
       appId,
       limit: PAGINATION_LIMIT,
       offset: (paging.page - 1) * PAGINATION_LIMIT,

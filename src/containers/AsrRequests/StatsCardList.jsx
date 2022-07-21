@@ -37,7 +37,7 @@ const StatsCardList = ({ startDate, endDate }) => {
         icon: infoIcon,
       },
       {
-        title: 'runningRequest',
+        title: t('runningRequest'),
         number: result.processing || 0,
         icon: configIcon,
       },
@@ -47,8 +47,8 @@ const StatsCardList = ({ startDate, endDate }) => {
         icon: successIcon,
       },
       {
-        title: 'emptyRequests',
-        number: result.unrecognized || 0,
+        title: t('emptyRequests'),
+        number: result.emptyText || 0,
         icon: warningIcon,
       },
       {

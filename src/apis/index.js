@@ -2,12 +2,14 @@ import * as orders from './orders';
 import * as statistics from './statistics';
 import * as packages from './packages';
 import * as users from './user';
-import * as requests from './requests';
+import * as request from './request';
+import * as session from './session';
 import * as bot from './bot';
 
 export default {
   orders,
-  requests,
+  request,
+  session,
   bot,
   statistics,
   packages,

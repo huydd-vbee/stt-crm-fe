@@ -36,19 +36,19 @@ const RequestStats = ({ startDate, endDate }) => {
 
   useEffect(() => {
     // eslint-disable-next-line no-console
-    fetchApp().then(err => console.error(err));
+    fetchApp().catch(err => console.error(err));
   }, [appId]);
 
   return (
     <StyledRequestStatsContainer>
       <ProcessHandler loading={loading}>
         <StyledRequestStatsChartContainer>
-          <StatusProportionChart />
-          <RequestRateChart />
+          <StatusProportionChart startDate={startDate} endDate={endDate} />
+          <RequestRateChart startDate={startDate} endDate={endDate} />
         </StyledRequestStatsChartContainer>
         <StyledRequestStatsChartContainer>
-          <ResponseTimeChart />
-          <CallBotPopularityChart />
+          <ResponseTimeChart startDate={startDate} endDate={endDate} />
+          <CallBotPopularityChart startDate={startDate} endDate={endDate} />
         </StyledRequestStatsChartContainer>
       </ProcessHandler>
     </StyledRequestStatsContainer>

@@ -22,7 +22,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
 
   const initialTimeRangeFilter = [
-    moment().subtract(90, 'd').toString(),
+    moment().subtract(180, 'd').toString(),
     moment().toString(),
   ];
 

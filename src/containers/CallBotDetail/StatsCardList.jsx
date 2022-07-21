@@ -38,7 +38,7 @@ const StatsCardList = ({ startDate, endDate, appId}) => {
       },
       {
         title: t('emptyRequests'),
-        number: result.unrecognized || 0,
+        number: result.emptyText || 0,
         icon: warningIcon,
       },
       {

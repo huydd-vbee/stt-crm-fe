@@ -38,12 +38,12 @@ const AsrRequestDetailDrawer = ({
 
   const fetchAsrRequestDetail = async () => {
     setLoading(true);
-    const requestDetails = await apis.requests.getCallRequestDetails({
+    const requestDetails = await apis.request.getCallRequestDetails({
       appId,
       sessionId,
       requestId,
     });
-    const requestAudioBuffer = await apis.requests.getCallRequestAudio({
+    const requestAudioBuffer = await apis.request.getCallRequestAudio({
       appId,
       sessionId,
       requestId,

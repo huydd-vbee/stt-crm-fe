@@ -40,7 +40,7 @@ const SessionCard = ({appId, sessionId}) => {
 
   const fetchCallSessionDetail = async () => {
     setLoading(true);
-    const data = await apis.requests.getCallSessionDetail({ appId, sessionId });
+    const data = await apis.session.getCallSessionDetail({ appId, sessionId });
     if (data.status) {
       // eslint-disable-next-line no-console
       console.info(data.result);

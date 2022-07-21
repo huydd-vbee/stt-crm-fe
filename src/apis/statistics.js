@@ -4,14 +4,21 @@ import axios from 'axios';
 import { API_URL } from '@src/configs';
 import API from './api';
 
-const getRequestResponseTimeStats = async ({ startDate, endDate, general }) => {
-  return {status: 0};
-  // eslint-disable-next-line no-unreachable
+const getRequestRateStats = async ({startDate, endDate, appId}) => {
+  const response = await API({
+    method: 'GET',
+    url: `${RESOURCE.STATISTICS}/request/rate`,
+    params: { startDate, endDate, appId },
+  });
+  return response;
+};
+
+const getRequestResponseTimeStats = async ({ startDate, endDate, appId }) => {
   try {
     const response = await API({
       method: 'GET',
-      url: `${RESOURCE.STATISTICS}/requests/response-time`,
-      params: { startDate, endDate, general },
+      url: `${RESOURCE.STATISTICS}/request/response-time`,
+      params: { startDate, endDate, appId },
     });
     return response;
   } catch (error) {
@@ -22,17 +29,30 @@ const getRequestResponseTimeStats = async ({ startDate, endDate, general }) => {
 const getRequestStatusStats = async ({startDate, endDate, appId}) => {
   const response = await API({
     method: 'GET',
-    url: `${RESOURCE.STATISTICS}/requests`,
+    url: `${RESOURCE.STATISTICS}/request/status`,
     params: { startDate, endDate, appId },
   });
   return response;
+};
+
+const getRequestStatsByAppId = async ({startDate, endDate, appId}) => {
+  try {
+    const response = await API({
+      method: 'GET',
+      url: `${RESOURCE.STATISTICS}/request/app/${appId}`,
+      params: { startDate, endDate, appId },
+    });
+    return response;
+  } catch (error) {
+    return error.response?.data;
+  }
 };
 
 const getRequestStatsByApp = async ({limit, offset, startDate, endDate}) => {
   try {
     const response = await API({
       method: 'GET',
-      url: `${RESOURCE.STATISTICS}/apps`,
+      url: `${RESOURCE.STATISTICS}/app/general`,
       params: { limit, offset, startDate, endDate },
     });
     return response;
@@ -41,12 +61,12 @@ const getRequestStatsByApp = async ({limit, offset, startDate, endDate}) => {
   }
 };
 
-const getRequestStatsByAppId = async ({startDate, endDate, appId}) => {
+const getRequestStatsForTopListApps = async ({startDate, endDate}) => {
   try {
     const response = await API({
       method: 'GET',
-      url: `${RESOURCE.STATISTICS}/requests/app/${appId}`,
-      params: { startDate, endDate, appId },
+      url: `${RESOURCE.STATISTICS}/app/top-list`,
+      params: { startDate, endDate },
     });
     return response;
   } catch (error) {
@@ -75,7 +95,9 @@ const exportExcelFile = async ({ status }) => {
 export {
   getRequestStatusStats,
   getRequestResponseTimeStats,
+  getRequestRateStats,
   getRequestStatsByApp,
+  getRequestStatsForTopListApps,
   getRequestStatsByAppId,
   exportExcelFile
 };

@@ -32,7 +32,7 @@ const AsrRequestList = ({ appId, sessionId}) => {
 
   const fetchAsrRequestList = async () => {
     setLoading(true);
-    const data = await apis.requests.getCallRequestsBySessionAndApp({
+    const data = await apis.request.getCallRequestsBySessionAndApp({
       appId,
       sessionId,
       limit: PAGINATION_LIMIT,

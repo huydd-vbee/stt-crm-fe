@@ -179,6 +179,11 @@
   "statistics": "Statistics",
   "validation": "Validation",
 
+  "succeeded": "Succeeded",
+  "failed": "Failed",
+  "emptyText": "Empty Text",
+  "timeout":  "Timeout",
+
   "today": "Today",
   "lastWeek": "Last week",
   "lastMonth": "Last month",
