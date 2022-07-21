@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -43,8 +45,6 @@ const Dashboard = () => {
 
   const [filter, setFilter] = useState(initialFilter);
 
-
-  // eslint-disable-next-line no-unused-vars
   const handleChangeFilter = ({ value, name }) => {
     setFilter({ ...filter, [name]: value });
   };
@@ -87,12 +87,12 @@ const Dashboard = () => {
       {/*  value={filter.provider} */}
       {/*  handleChangeFilter={handleChangeFilter} */}
       {/* /> */}
-      <CustomDatePickerRangeNew
-        value={filter.createdAt}
-        isRefresh
-        onChange={handleChangeDatePickerRange}
-        handleRefresh={handleResetFilter}
-      />
+      {/* <CustomDatePickerRangeNew */}
+      {/*  value={filter.createdAt} */}
+      {/*  isRefresh */}
+      {/*  onChange={handleChangeDatePickerRange} */}
+      {/*  handleRefresh={handleResetFilter} */}
+      {/* /> */}
     </div>
   );
 

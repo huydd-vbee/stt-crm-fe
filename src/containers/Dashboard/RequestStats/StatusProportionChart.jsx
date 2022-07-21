@@ -156,7 +156,7 @@ const StatusProportionChart = ({ startDate, endDate }) => {
       plugins: {
         legend: {
           display: true,
-          position: "top"
+          position: "right"
         },
         datalabels: {
           formatter: (value, ctx) => {

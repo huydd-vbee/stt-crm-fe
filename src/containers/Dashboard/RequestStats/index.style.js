@@ -40,7 +40,7 @@ export const ExcelButton = styled(Button)`
 export const StyledRequestStatsChartContainer = styled('div')`
   display: grid;
   //grid-template-columns: 25% 50% 20%;
-  grid-template-columns: 25% repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 35% repeat(auto-fit, minmax(300px, 1fr));
   margin: 24px 0px;
   gap: 16px;
 `;
