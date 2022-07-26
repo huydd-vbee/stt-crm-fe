@@ -79,7 +79,7 @@ const CallSessionList = ({ startDate, endDate }) => {
       field: 'noMsgs',
       title: t('noMessages'),
       sortable: false,
-      align: 'left',
+      align: 'right',
       render: (rowData) => `${rowData.noMessages || ''}`,
     },
     {

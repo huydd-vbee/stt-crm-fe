@@ -14,6 +14,7 @@ import { IDENTITY_PROVIDER } from '@src/constants/customer';
 import iconExcel from '@src/assets/icons/excel.png';
 
 // eslint-disable-next-line no-unused-vars
+import AppStats from '@src/containers/Dashboard/AppStats';
 import { StyledCustomers, ExcelButton } from './index.style';
 // eslint-disable-next-line no-unused-vars
 
@@ -64,8 +65,16 @@ const Dashboard = () => {
       label: t('overview'),
       panel: (
         <RequestStats
-          startDate={filter.createdAt[0]}
-          endDate={filter.createdAt[1]}
+          dateFilter={filter.createdAt}
+        />
+      ),
+    },
+    {
+      id: 'byApp',
+      label: t('byApp'),
+      panel: (
+        <AppStats
+          dateFilter={filter.createdAt}
         />
       ),
     },

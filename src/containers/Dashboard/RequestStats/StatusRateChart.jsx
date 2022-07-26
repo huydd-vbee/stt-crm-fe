@@ -10,7 +10,6 @@ import { Line } from 'react-chartjs-2';
 import faker from 'faker';
 // eslint-disable-next-line no-unused-vars
 import { delimitNumber } from '@src/utils/number';
-// eslint-disable-next-line no-unused-vars
 import { COLOR, TRANSPARENT_COLOR } from '@src/styles/color';
 import apis from '@src/apis';
 import ProcessHandler from '@src/components/ProcessHandler';
@@ -19,7 +18,7 @@ import { StyledAppStatsCard } from './index.style';
 ChartJS.register(...registerables);
 
 // eslint-disable-next-line no-unused-vars
-const RequestRateChart = ({ dateFilter, timeBucketType}) => {
+const StatusRateChart = ({ dateFilter, timeBucketType}) => {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -30,7 +29,7 @@ const RequestRateChart = ({ dateFilter, timeBucketType}) => {
     setLoading(true);
     // eslint-disable-next-line no-console
     console.log('fetch Response Time Data');
-    const data = await apis.statistics.getRequestRateStats({
+    const data = await apis.statistics.getRequestStatusRateStats({
       startDate: dateFilter[0],
       endDate: dateFilter[1],
     });
@@ -40,8 +39,9 @@ const RequestRateChart = ({ dateFilter, timeBucketType}) => {
     if (data.status) {
       setChartLabels(data.result.map((e) => e.id).reverse());
       setChartDatasets({
-        countSessionDataset: data.result.map((e) => e.noSession).reverse(),
-        countRequestDataset: data.result.map((e) => e.noMessage).reverse(),
+        countFailRequestDataset: data.result.map((e) => e.statusCount.filter((sc) => sc.status === "Failed")[0]?.count || 0.1).reverse(),
+        countTimeoutRequestDataset: data.result.map((e) => e.statusCount.filter((sc) => !sc.status)[0]?.count || 0.1).reverse(),
+        countSucceedRequestDataset: data.result.map((e) => e.statusCount.filter((sc) => sc.status === "Succeeded")[0]?.count || 0.1).reverse(),
       });
     }
     // eslint-disable-next-line no-console
@@ -90,10 +90,9 @@ const RequestRateChart = ({ dateFilter, timeBucketType}) => {
         stacked: true,
       },
       y: {
-        display: false,
         type: 'logarithmic',
         stacked: true,
-        position: "right",
+        position: "left",
         ticks: {
           min: 0.1,
           callback: (value, index) => {
@@ -112,29 +111,21 @@ const RequestRateChart = ({ dateFilter, timeBucketType}) => {
           display: true,
         },
       },
-      y1: {
-        type: 'linear',
-        stacked: false,
-        position: "left",
-        // grid: {
-        //   drawOnChartArea: false,
-        // },
-        title: {
-          text: "Count",
-          display: true,
-        }
-      },
-    },
+    }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const skipped = (ctx, value) => {
     const currentPointDate = new Date(chartLabels[ctx.p0DataIndex]);
     const nextPointDate = new Date(chartLabels[ctx.p1DataIndex]);
     const todayPointDate = new Date();
     const diffDays = (date2, date1) => Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
-    return diffDays(currentPointDate, nextPointDate) > 1
+    const rs = diffDays(currentPointDate, nextPointDate) > 1
     || (ctx.p1DataIndex === chartLabels.length-1 && diffDays(nextPointDate, todayPointDate) < 1)
       ? value : undefined;
+    // eslint-disable-next-line no-console
+    console.log(rs, value);
+    return rs;
   }
 
   const segmentConfig = {
@@ -146,30 +137,44 @@ const RequestRateChart = ({ dateFilter, timeBucketType}) => {
     labels: chartLabels,
     datasets: [
       {
-        label: 'No. Requests',
-        data: chartDatasets.countRequestDataset,
-        borderColor: COLOR.primary,
-        backgroundColor: COLOR.primary,
+        fill: true,
+        label: 'No. Failed Requests',
+        data: chartDatasets.countFailRequestDataset,
+        borderColor: COLOR.secondary,
+        backgroundColor: TRANSPARENT_COLOR.secondary,
         segment: segmentConfig,
         spanGaps: true,
-        yAxisID: 'y1',
+        yAxisID: 'y',
       },
       {
-        label: 'No. Calls',
-        data: chartDatasets.countSessionDataset,
-        backgroundColor: COLOR.warning,
-        yAxisID: 'y1',
-        type: 'bar'
+        fill: true,
+        label: 'No. Timeout Requests',
+        data: chartDatasets.countTimeoutRequestDataset,
+        borderColor: COLOR.yellow[600],
+        backgroundColor: TRANSPARENT_COLOR.warning,
+        segment: segmentConfig,
+        spanGaps: true,
+        yAxisID: 'y',
       },
+      {
+        fill: true,
+        label: 'No. Succeeded Requests',
+        data: chartDatasets.countSucceedRequestDataset,
+        borderColor: COLOR.primary,
+        backgroundColor: TRANSPARENT_COLOR.primary,
+        segment: segmentConfig,
+        spanGaps: true,
+        yAxisID: 'y',
+      }
     ],
   };
 
   return (
     <StyledAppStatsCard>
-      <Typography className="title">{t("Request Rate")}</Typography>
+      <Typography className="title">{t("Status Rate")}</Typography>
       <ProcessHandler loading={loading}>
         <Typography className="title-detail">
-          {`${t("Request Rate")} (${chartLabels[0]} ${t('to')} ${chartLabels[chartLabels.length - 1]})`}
+          {`${t("Status Rate")} (${chartLabels[0]} ${t('to')} ${chartLabels[chartLabels.length - 1]})`}
         </Typography>
         {chartLabels.length &&(
           <div className="chart-wrapper">
@@ -181,4 +186,4 @@ const RequestRateChart = ({ dateFilter, timeBucketType}) => {
   );
 }
 
-export default RequestRateChart;
+export default StatusRateChart;

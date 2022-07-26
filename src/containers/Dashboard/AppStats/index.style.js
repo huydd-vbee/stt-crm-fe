@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material';
 import { COLOR } from '@src/styles/color';
 import styled from 'styled-components';
 
-export const StyledAppDetail = styled(Box)`
+export const StyledRequestStatsContainer = styled(Box)`
   .styled-action-row {
     display: flex;
     justify-content: space-between;
@@ -37,8 +37,9 @@ export const ExcelButton = styled(Button)`
   padding: 8px 16px;
 `;
 
-export const StyledCardsContainer = styled('div')`
+export const StyledAppStatsChartContainer = styled('div')`
   display: grid;
+  //grid-template-columns: 25% 50% 20%;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   margin: 24px 0px;
   gap: 16px;

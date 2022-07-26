@@ -58,19 +58,33 @@ const CallBotList = ({ startDate, endDate }) => {
       render: (row) => `${row.botDetails.botName || ''}`,
     },
     {
-      field: 'avgMessagePerCall',
-      title: t('avgMessagePerCall'),
+      field: 'avgRequestsPerCall',
+      title: t('avgRequestsPerCall'),
       sortable: false,
-      align: 'left',
-      render: (row) => `${Math.round(row.avgMessageEachCall * 100) / 100 || 0}`,
+      align: 'right',
+      render: (row) => `${row.avgMessageEachCall.toFixed(2) || 0}`,
     },
     {
       field: 'noCall',
       title: t('noCall'),
       sortable: false,
-      align: 'left',
+      align: 'right',
       render: (row) => `${row.noCall || 0}`,
-    }
+    },
+    {
+      field: 'noRequest',
+      title: t('noRequest'),
+      sortable: false,
+      align: 'right',
+      render: (row) => `${row.noCall || 0}`,
+    },
+    {
+      field: 'blank',
+      title: '',
+      sortable: false,
+      align: 'right',
+      render: (row) => `          `,
+    },
   ];
 
   const handleRowClick = (appId) => {

@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import ProcessHandler from '@src/components/ProcessHandler';
 
+import StatusRateChart from './StatusRateChart';
 import RequestRateChart from './RequestRateChart';
 import ResponseTimeChart from './ResponseTimeChart';
 import StatusProportionChart from './StatusProportionChart';
-import CallBotPopularityChart from './CallBotPopularityChart';
 
 import { fakeData } from './fakeData';
 import {
@@ -16,7 +16,7 @@ import {
 
 
 // eslint-disable-next-line no-unused-vars
-const RequestStats = ({ startDate, endDate }) => {
+const RequestStats = ({ dateFilter }) => {
   const { appId } = useParams();
   // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
@@ -43,12 +43,12 @@ const RequestStats = ({ startDate, endDate }) => {
     <StyledRequestStatsContainer>
       <ProcessHandler loading={loading}>
         <StyledRequestStatsChartContainer>
-          <StatusProportionChart startDate={startDate} endDate={endDate} />
-          <RequestRateChart startDate={startDate} endDate={endDate} />
+          <ResponseTimeChart dateFilter={dateFilter} />
+          <RequestRateChart dateFilter={dateFilter} />
         </StyledRequestStatsChartContainer>
         <StyledRequestStatsChartContainer>
-          <ResponseTimeChart startDate={startDate} endDate={endDate} />
-          <CallBotPopularityChart startDate={startDate} endDate={endDate} />
+          <StatusProportionChart dateFilter={dateFilter} />
+          <StatusRateChart dateFilter={dateFilter} />
         </StyledRequestStatsChartContainer>
       </ProcessHandler>
     </StyledRequestStatsContainer>

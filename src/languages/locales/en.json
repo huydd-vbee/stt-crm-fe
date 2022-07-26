@@ -128,10 +128,13 @@
   "abandonedRequests": "Abandoned Requests",
   "emptyRequests": "Empty Text Requests",
 
+  "overview": "overview",
+  "byApp": "By App",
   "botList": "Call Bot List",
   "botName": "Bot Name",
-  "avgMessagePerCall": "Avg. No. Messages Per Call",
+  "avgRequestsPerCall": "Avg. No. Requests Per Call",
   "noCall": "No. Calls",
+  "noRequest": "No. Requests",
 
   "callSessionList": "Call Session List",
   "sessionId": "Session ID",

@@ -140,6 +140,7 @@ const TRANSPARENT_COLOR = {
   info: 'rgba(0, 207, 232, 0.12)',
   dark: 'rgba(30, 30, 30, 0.12)',
   light: 'rgba(186, 191, 199, 0.12)',
+  transparent: 'rgba(0, 0, 0, 0)',
 };
 
 const GRADIENT_COLOR = {

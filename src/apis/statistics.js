@@ -35,6 +35,15 @@ const getRequestStatusStats = async ({startDate, endDate, appId}) => {
   return response;
 };
 
+const getRequestStatusRateStats = async ({startDate, endDate, appId}) => {
+  const response = await API({
+    method: 'GET',
+    url: `${RESOURCE.STATISTICS}/request/status/rate`,
+    params: { startDate, endDate, appId },
+  });
+  return response;
+};
+
 const getRequestStatsByAppId = async ({startDate, endDate, appId}) => {
   try {
     const response = await API({
@@ -94,6 +103,7 @@ const exportExcelFile = async ({ status }) => {
 
 export {
   getRequestStatusStats,
+  getRequestStatusRateStats,
   getRequestResponseTimeStats,
   getRequestRateStats,
   getRequestStatsByApp,

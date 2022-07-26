@@ -21,7 +21,7 @@ const AsrRequests = () => {
   const INITIAL_PAGING = { page: 1, total: 0 };
 
   const initialTimeRangeFilter = [
-    moment().subtract(90, 'd').toString(),
+    moment().subtract(120, 'd').toString(),
     moment().toString()
   ];
 

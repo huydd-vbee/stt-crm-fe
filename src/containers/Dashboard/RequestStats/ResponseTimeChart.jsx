@@ -6,6 +6,7 @@ import {
   registerables
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import DataLabelPlugin from 'chartjs-plugin-datalabels'
 // eslint-disable-next-line no-unused-vars
 import faker from 'faker';
 import { delimitNumber } from '@src/utils/number';
@@ -17,7 +18,7 @@ import { StyledAppStatsCard } from './index.style';
 ChartJS.register(...registerables);
 
 // eslint-disable-next-line no-unused-vars
-const ResponseTimeChart = ({ startDate, endDate }) => {
+const ResponseTimeChart = ({ dateFilter }) => {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -30,8 +31,8 @@ const ResponseTimeChart = ({ startDate, endDate }) => {
     // eslint-disable-next-line no-console
     console.log('fetch Response Time Data');
     const data = await apis.statistics.getRequestResponseTimeStats({
-      startDate,
-      endDate,
+      startDate: dateFilter[0],
+      endDate: dateFilter[1],
     });
     // eslint-disable-next-line no-console
     console.log(data);
@@ -61,7 +62,7 @@ const ResponseTimeChart = ({ startDate, endDate }) => {
   useEffect(() => {
     // eslint-disable-next-line no-console
     fetchData().catch(err => console.error(err))
-  }, [startDate, endDate]);
+  }, [dateFilter]);
 
   const options = {
     responsive: true,
@@ -76,6 +77,20 @@ const ResponseTimeChart = ({ startDate, endDate }) => {
       legend: {
         display: false,
       },
+      datalabels: {
+        formatter: (value, ctx) => {
+          let sum = 0;
+          ctx.chart.data.datasets[0].data.forEach(data => {
+            sum += data;
+          });
+          return `${(value * 100 / sum).toFixed(1)}%`;
+        },
+        color: COLOR.black,
+        backgroundColor: COLOR.white,
+        align: 'end',
+        anchor: 'end',
+        offset: 5,
+      }
     },
     borderRadius: 8,
     barThickness: 40,
@@ -103,7 +118,11 @@ const ResponseTimeChart = ({ startDate, endDate }) => {
         </Typography>
         {chartLabels.length && (
           <div className="chart-wrapper">
-            <Bar data={chartData} options={options} />
+            <Bar
+              data={chartData}
+              options={options}
+              plugins={[DataLabelPlugin]}
+            />
           </div>
         )}
       </ProcessHandler>

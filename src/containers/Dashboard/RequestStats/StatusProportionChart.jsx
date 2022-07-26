@@ -103,7 +103,7 @@ const DrawMiddleTextInDoughnutChartPlugin = {
 }
 
 // eslint-disable-next-line no-unused-vars
-const StatusProportionChart = ({ startDate, endDate }) => {
+const StatusProportionChart = ({ dateFilter }) => {
   const { t } = useTranslation();
 
   const labels = ['succeeded', 'failed', 'emptyText', 'timeout'];
@@ -117,8 +117,8 @@ const StatusProportionChart = ({ startDate, endDate }) => {
     setLoading(true)
     console.log("fetch Status Proportion Chart Data");
     const data = await apis.statistics.getRequestStatusStats({
-      startDate,
-      endDate,
+      startDate: dateFilter[0],
+      endDate: dateFilter[1],
     });
     console.log(data)
 
@@ -132,7 +132,7 @@ const StatusProportionChart = ({ startDate, endDate }) => {
 
   useEffect(() => {
     fetchChartData().catch(err => console.error(err))
-  }, [ startDate, endDate ]);
+  }, [ dateFilter ]);
 
   const chartLabels = labels.map((label) => t(label));
   const chartData = {
@@ -148,38 +148,44 @@ const StatusProportionChart = ({ startDate, endDate }) => {
   };
 
   const options = () => ({
-      responsive: true,
-      maintainAspectRatio: false,
-      tooltips: {
-        enabled: false
+    layout: {
+      padding: 20,
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    tooltips: {
+      enabled: false,
+    },
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
       },
-      plugins: {
-        legend: {
-          display: true,
-          position: "right"
+      datalabels: {
+        display: true,
+        formatter: (value, ctx) => {
+          let sum = 0;
+          ctx.chart.data.datasets[0].data.forEach(data => {
+            sum += data;
+          });
+          return `${chartLabels[ctx.dataIndex]}: ${(value * 100 / sum).toFixed(3)}%`;
         },
-        datalabels: {
-          formatter: (value, ctx) => {
-            let sum = 0;
-            ctx.chart.data.datasets[0].data.forEach(data => {
-              sum += data;
-            });
-            return `${(value * 100 / sum).toFixed(3)}%`;
-          },
-          color: COLOR.black,
-          backgroundColor: COLOR.white
-        }
+        color: COLOR.black,
+        backgroundColor: COLOR.white,
+        anchor: 'end',
+        align: 'center',
       },
-      elements: {
-        center: {
-          text: `${(centerStatusStat * 100 /responseTimeRangeCount.reduce((partialSum, a) => partialSum + a, 0)).toFixed(2)}`,
-          color: COLOR.secondary,
-          fontStyle: 'Arial Black',
-          sidePadding: 20,
-          minFontSize: 20,
-        }
-      }
-    })
+    },
+    elements: {
+      center: {
+        text: `${(centerStatusStat * 100 / responseTimeRangeCount.reduce((partialSum, a) => partialSum + a, 0)).toFixed(2)}`,
+        color: COLOR.secondary,
+        fontStyle: 'Arial Black',
+        sidePadding: 20,
+        minFontSize: 20,
+      },
+    },
+  });
 
   return (
     <StyledAppStatsCard>

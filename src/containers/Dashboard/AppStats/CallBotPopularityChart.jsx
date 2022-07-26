@@ -8,20 +8,21 @@ import {
   registerables,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import DataLabelPlugin from 'chartjs-plugin-datalabels'
+import DataLabelPlugin from 'chartjs-plugin-datalabels';
 // eslint-disable-next-line no-unused-vars
 import faker from 'faker';
 import { delimitNumber } from '@src/utils/number';
+// eslint-disable-next-line no-unused-vars
 import { COLOR, TRANSPARENT_COLOR } from '@src/styles/color';
 
-import { StyledAppStatsCard } from './index.style';
+import { StyledAppStatsCard } from '../RequestStats/index.style';
 
 ChartJS.register(...registerables);
 
 // eslint-disable-next-line no-unused-vars
 const labels = ['CallBot 1', 'CallBot 2', 'CallBot 3', 'CallBot 4', 'Other CallBots'];
 
-const CallBotPopularityChart = ({ startDate, endDate }) => {
+const CallBotPopularityChart = ({ dateFilter }) => {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -33,8 +34,8 @@ const CallBotPopularityChart = ({ startDate, endDate }) => {
     // eslint-disable-next-line no-console
     console.log('fetch Call Bot Popularity Data');
     const data = await apis.statistics.getRequestStatsForTopListApps({
-      startDate,
-      endDate,
+      startDate: dateFilter[0],
+      endDate: dateFilter[1],
     });
     // eslint-disable-next-line no-console
     console.log(data);
@@ -54,7 +55,7 @@ const CallBotPopularityChart = ({ startDate, endDate }) => {
   useEffect(() => {
     // eslint-disable-next-line no-console
     fetchData().catch(err => console.error(err));
-  }, [startDate, endDate]);
+  }, [dateFilter]);
 
   const chartData = {
     labels: chartLabels,
@@ -66,11 +67,11 @@ const CallBotPopularityChart = ({ startDate, endDate }) => {
         backgroundColor: COLOR.primary,
         yAxisID: 'y1',
         stack: 'sessionCount',
-        borderRadius: 2,
         datalabels: {
           align: 'end',
           anchor: 'end'
-        }
+        },
+        borderRadius: 8,
       },
       // {
       //   label: 'No. Messages',
@@ -95,26 +96,33 @@ const CallBotPopularityChart = ({ startDate, endDate }) => {
         label: 'Avg. Depth Reality',
         data: chartDatasets.avgDepthRealityDataset,
         borderColor: COLOR.secondary,
-        backgroundColor: TRANSPARENT_COLOR.secondary,
+        backgroundColor: COLOR.secondary,
         yAxisID: 'y',
         stack: 'depth',
-        borderRadius: 2,
         datalabels: {
-          display: false
-        }
+          formatter: (value, ctx) => {
+            const idx = ctx.dataIndex;
+            return `${(chartDatasets.avgDepthRealityDataset[idx] / chartDatasets.avgDepthTheoryDataset[idx] * 100).toFixed(0)}%`;
+          },
+          align: 'center',
+          anchor: 'center',
+          color: COLOR.white
+        },
+        borderWidth: 2,
+        borderRadius: 8,
       },
       {
         label: 'Avg. Depth Theory',
         data: chartDatasets.avgDepthTheoryDataset,
-        borderWidth: 2,
-        borderColor: COLOR.primary,
-        backgroundColor: TRANSPARENT_COLOR.primary,
+        borderColor: COLOR.secondary,
+        // backgroundColor: TRANSPARENT_COLOR.secondary,
         yAxisID: 'y',
         stack: 'depth',
-        borderRadius: 2,
         datalabels: {
           display: false
-        }
+        },
+        borderWidth: 2,
+        borderRadius: 8,
       },
     ],
   };
@@ -142,10 +150,18 @@ const CallBotPopularityChart = ({ startDate, endDate }) => {
         grid: {
           drawOnChartArea: false,
         },
+        title: {
+          text: "Call Depth",
+          display: true,
+        }
       },
       y1: {
         stacked: false,
         position: 'left',
+        title: {
+          text: "No. Calls",
+          display: true,
+        }
       },
     },
   };
